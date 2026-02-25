@@ -1,12 +1,15 @@
-# 🌙 Moon Cat Hub - MoonLib
+# 🌙 Moonlib - Reivindicada por Moon Cat
 
-> **Status:** Versão Beta Privada
+> **Status:** Versão Beta Privada [cite: 2026-02-23]
 
-Bem-vindo ao repositório oficial da **MoonLib**. Este projeto foi reivindicado e agora é mantido por **Moon Cat**.
+Esta biblioteca, anteriormente conhecida como **Redz**, foi oficialmente reivindicada e agora é propriedade de **Moon Cat**. [cite: 2026-02-25]
 
-## 📌 Sobre o Projeto
-A MoonLib é uma biblioteca de interface e funções para scripts mobile, focada em executores como Delta. Otimizada para performance e estabilidade.
+## 📌 Histórico
+* **Propriedade Original:** Redz (Reivindicado) [cite: 2026-02-25]
+* **Novo Mantenedor:** Moon Cat [cite: 2026-02-25]
+* **Plataforma:** Otimizado para Moto G04s. [cite: 2026-02-25]
 
-## 🚀 Como Usar (Loadstring)
+## 🚀 Loadstring Oficial
 ```lua
 loadstring(game:HttpGet("[https://raw.githubusercontent.com/vitorfyd-hash/Moonlib/main/moonlib.lua](https://raw.githubusercontent.com/vitorfyd-hash/Moonlib/main/moonlib.lua)"))()
+
