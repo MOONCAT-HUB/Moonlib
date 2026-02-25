@@ -1,68 +1,85 @@
--- Moon Cat Hub | v1.0 Premium
--- Chave: MOON
--- quer divulgar divulgue mísera kk
+-- [[ MOONCAT HUB - INTEGRADO ]]
+-- Versão Beta: "quer divulgar divulgue mísera kk"
 
--- [[ FUNÇÃO PRINCIPAL DO HUB ]]
-local function StartMoonHub()
-    -- Carregando a Interface (Visual Redz)
-    local MoonLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/MOONCAT-HUB/MoonLib/main/redz_ui.lua"))()
-    
-    local Window = MoonLib:CreateWindow({
-        Title = "Moon Cat Hub",
-        SubTitle = "quer divulgar divulgue mísera kk",
-        Color = Color3.fromRGB(255, 0, 0) -- Vermelho MoonCat
-    })
+local MoonLib = {}
+local Player = game.Players.LocalPlayer
+_G.AutoLevel = false
 
-    -- [ ABA DE FARM - MOTOR HOHO ]
-    local FarmTab = Window:CreateTab("Auto Farm")
-    FarmTab:CreateToggle({
-        Name = "Auto Level (HoHo Engine)",
-        Callback = function(v)
-            _G.AutoFarm = v
-            -- O código de farm do HoHo entra aqui
-            if v then print("Farm Iniciado!") end
-        end
-    })
-
-    -- [ ABA DE EVENTOS - TEMPERO ZEN ]
-    local EventTab = Window:CreateTab("Sea Events")
-    EventTab:CreateToggle({
-        Name = "Auto Kitsune/Leviathan (Zen)",
-        Callback = function(v)
-            _G.ZenEvents = v
-            -- O segredo do Zen Hub entra aqui
-            if v then print("Buscando Eventos de Mar...") end
-        end
-    })
-
-    -- [ ABA DE COMBATE - AIM COLOR ]
-    local CombatTab = Window:CreateTab("Combate")
-    CombatTab:CreateButton({
-        Name = "Ativar Aim Color (Blood Strike)",
-        Callback = function()
-            -- Aqui vai a sua lógica de Aim por Cor
-            print("Aim Color Ativado!")
-        end
-    })
+-- === MOTOR DE FARM (LÓGICA) ===
+local function GetQuest()
+    local lvl = Player.Data.Level.Value
+    if lvl <= 14 then
+        return {Name = "Bandit", QuestName = "BanditQuest1", Level = 1, NPC = CFrame.new(1059.3, 15.4, 1549.2)}
+    elseif lvl <= 29 then
+        return {Name = "Monkey", QuestName = "MonkeyQuest1", Level = 1, NPC = CFrame.new(-1601.1, 36.8, 153.4)}
+    else
+        -- Fallback para o primeiro caso se o nível for maior (expanda depois)
+        return {Name = "Bandit", QuestName = "BanditQuest1", Level = 1, NPC = CFrame.new(1059.3, 15.4, 1549.2)}
+    end
 end
 
--- [[ SISTEMA DE KEY ESTILO HOHO (ANTI-LULA/TAXA) ]]
-local function ShowKeySystem()
-    local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
-    local Main = Instance.new("Frame", ScreenGui)
-    Main.Size = UDim2.new(0, 320, 0, 180)
-    Main.Position = UDim2.new(0.5, -160, 0.5, -90)
-    Main.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-    Instance.new("UICorner", Main)
+function StartMoonFarm()
+    task.spawn(function()
+        while _G.AutoLevel do
+            task.wait(0.3)
+            pcall(function()
+                local q = GetQuest()
+                local hasQuest = Player.PlayerGui.Main.Quest.Visible
+                
+                if not hasQuest then
+                    -- Teleporte para o NPC de Missão
+                    Player.Character.HumanoidRootPart.CFrame = q.NPC
+                    task.wait(0.5)
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", q.QuestName, q.Level)
+                else
+                    -- Procura o Inimigo para Farmar
+                    for _, v in pairs(game.Workspace.Enemies:GetChildren()) do
+                        if v.Name == q.Name and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                            repeat
+                                task.wait()
+                                -- Posicionamento seguro (estilo HoHo)
+                                Player.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0, 10, 0)
+                                -- Ataque
+                                game:GetService("VirtualUser"):CaptureController()
+                                game:GetService("VirtualUser"):ClickButton1(Vector2.new(850, 520))
+                            until v.Humanoid.Health <= 0 or not _G.AutoLevel
+                        end
+                    end
+                end
+            end)
+        end
+    end)
+end
 
-    local Title = Instance.new("TextLabel", Main)
-    Title.Text = "MOON CAT HUB - KEY SYSTEM"
-    Title.Size = UDim2.new(1, 0, 0, 40)
-    Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Title.BackgroundTransparency = 1
-    Title.Font = Enum.Font.GothamBold
+-- === INTERFACE MOONLIB ===
+-- Aqui eu uso o esqueleto da sua biblioteca para criar a janela
+local Window = MoonLib:CreateLib({
+    Name = "MoonCat Hub",
+    Subtitle = "quer divulgar divulgue mísera kk",
+    Color = Color3.fromRGB(170, 0, 255) -- Um roxo brabo pro gato
+})
 
-    local Input = Instance.new("TextBox", Main)
-    Input.PlaceholderText = "Digite a Key (Chave: MOON)"
-    Input
-    
+local MainTab = Window:CreateTab("Auto Farm")
+
+MainTab:CreateToggle({
+    Name = "Auto Level (Sea 1)",
+    Default = false,
+    Callback = function(Value)
+        _G.AutoLevel = Value
+        if Value then
+            StartMoonFarm()
+        else
+            print("Farm Desativado")
+        end
+    end
+})
+
+local MiscTab = Window:CreateTab("Outros")
+MiscTab:CreateButton({
+    Name = "Rejoin Server",
+    Callback = function()
+        game:GetService("TeleportService"):Teleport(game.PlaceId, Player)
+    end
+})
+
+print("MoonCat Hub carregado com sucesso!")
