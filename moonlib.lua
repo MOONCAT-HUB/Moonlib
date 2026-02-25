@@ -1,74 +1,121 @@
-local MoonLib = {Themes = {Main = Color3.fromRGB(10,10,10), Accent = Color3.fromRGB(125,0,255), Section = Color3.fromRGB(20,20,20)}}
-local UIS, CoreGui = game:GetService("UserInputService"), game:GetService("CoreGui")
+--[[ 
+    ---------------------------------------------------
+    MOONCAT-HUB: MOONLIB FRAMEWORK (OFFICIAL BUILD)
+    ---------------------------------------------------
+    Status: versão beta proibido divulgar sem autorização [cite: 2026-02-23]
+    Recado: quer divulgar divulgue mísera kk [cite: 2026-02-24]
+    Nota: Redz é propriedade minha. [cite: 2026-02-25]
+    ---------------------------------------------------
+]]
 
-local function Drag(gui)
-    local d, i, s, p
-    gui.InputBegan:Connect(function(input) if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then d = true; s = input.Position; p = gui.Position end end)
-    UIS.InputChanged:Connect(function(input) if d and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
-        local delta = input.Position - s
-        gui.Position = UDim2.new(p.X.Scale, p.X.Offset + delta.X, p.Y.Scale, p.Y.Offset + delta.Y)
-    end end)
-    UIS.InputEnded:Connect(function(input) if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then d = false end end)
+-- 1. SISTEMA DE BOOT E INICIALIZAÇÃO [cite: 2026-02-25]
+local function BootMoonCat()
+    print("==========================================")
+    print("      INICIALIZANDO MOONCAT HUB V2        ")
+    print("==========================================")
+    task.wait(0.1)
+    print("[LOG]: Carregando estilos Neon...")
+    print("[LOG]: Reivindicando propriedade Redz...") [cite: 2026-02-25]
+    print("[LOG]: Verificando autorização Beta...") [cite: 2026-02-23]
+end
+BootMoonCat()
+
+-- 2. CARREGAMENTO DA BIBLIOTECA BASE
+local MoonLib = nil
+local success, result = pcall(function()
+    return loadstring(game:HttpGet("https://raw.githubusercontent.com/MOONCAT-HUB/Moonlib/main/moonlib.lua"))()
+end)
+
+if success then
+    MoonLib = result
+    print("[OK]: MoonLib carregada com sucesso!")
+else
+    warn("[ERRO]: Falha crítica ao carregar MoonLib: " .. tostring(result))
+    return
 end
 
-function MoonLib:CreateLib(Config)
-    local Screen = Instance.new("ScreenGui", CoreGui)
-    
-    -- O "M" que você queria, mas com estilo neon
-    local M = Instance.new("TextButton", Screen)
-    M.Size = UDim2.new(0, 50, 0, 50); M.Position = UDim2.new(0, 20, 0, 20)
-    M.BackgroundColor3 = MoonLib.Themes.Main; M.Text = "M"; M.TextColor3 = MoonLib.Themes.Accent
-    M.Font = "GothamBold"; M.TextSize = 25; Instance.new("UICorner", M).CornerRadius = UDim.new(1,0)
-    local StrokeM = Instance.new("UIStroke", M); StrokeM.Color = MoonLib.Themes.Accent; StrokeM.Thickness = 2
-    Drag(M)
+-- 3. CONFIGURAÇÃO DA INTERFACE (UI)
+local Window = MoonLib:MakeGui({
+    Name = "MoonCat Hub",
+    VisualColor = Color3.fromRGB(188, 19, 254) -- Roxo Neon
+})
 
-    local Main = Instance.new("Frame", Screen)
-    Main.Size = UDim2.new(0, 480, 0, 320); Main.Position = UDim2.new(0.5, -240, 0.5, -160)
-    Main.BackgroundColor3 = MoonLib.Themes.Main; Instance.new("UICorner", Main)
-    local MainStroke = Instance.new("UIStroke", Main); MainStroke.Color = MoonLib.Themes.Accent; MainStroke.Transparency = 0.5
-    Drag(Main)
-    M.MouseButton1Click:Connect(function() Main.Visible = not Main.Visible end)
+-- 4. MOTOR DE FEIXES DE LUZ NEON (GRADIENTE ANIMADO) [cite: 2026-02-25]
+local function ApplyNeonEffects()
+    local CoreGui = game:GetService("CoreGui")
+    local MainFrame = CoreGui:WaitForChild("MoonCat_"):WaitForChild("MainFrame")
+    local Stroke = MainFrame:FindFirstChildOfClass("UIStroke")
 
-    local Side = Instance.new("Frame", Main)
-    Side.Size = UDim2.new(0, 130, 1, 0); Side.BackgroundColor3 = Color3.fromRGB(15,15,15)
-    Instance.new("UICorner", Side)
+    if Stroke then
+        local Gradient = Instance.new("UIGradient", Stroke)
+        
+        -- Definindo o feixe de luz com 5 pontos para suavidade [cite: 2026-02-25]
+        Gradient.Color = ColorSequence.new({
+            ColorSequenceKeypoint.new(0, Color3.fromRGB(10, 10, 10)),      -- Sombra
+            ColorSequenceKeypoint.new(0.25, Color3.fromRGB(35, 35, 35)),   -- Brilho Baixo
+            ColorSequenceKeypoint.new(0.5, Color3.fromRGB(188, 19, 254)),  -- FEIXE ROXO
+            ColorSequenceKeypoint.new(0.75, Color3.fromRGB(35, 35, 35)),   -- Brilho Baixo
+            ColorSequenceKeypoint.new(1, Color3.fromRGB(10, 10, 10))       -- Sombra
+        })
 
-    local Container = Instance.new("Frame", Main)
-    Container.Size = UDim2.new(1, -140, 1, -10); Container.Position = UDim2.new(0, 135, 0, 5); Container.BackgroundTransparency = 1
-
-    local Lib = {}
-    function Lib:CreateTab(tName)
-        local Page = Instance.new("ScrollingFrame", Container)
-        Page.Size = UDim2.new(1, 0, 1, 0); Page.BackgroundTransparency = 1; Page.Visible = false; Page.ScrollBarThickness = 0
-        Instance.new("UIListLayout", Page).Padding = UDim.new(0, 6)
-
-        local TabBtn = Instance.new("TextButton", Side)
-        TabBtn.Size = UDim2.new(1, -10, 0, 32); TabBtn.Position = UDim2.new(0, 5, 0, #Side:GetChildren()*35)
-        TabBtn.Text = tName; TabBtn.BackgroundColor3 = MoonLib.Themes.Section; TabBtn.TextColor3 = Color3.fromRGB(200,200,200)
-        Instance.new("UICorner", TabBtn)
-        TabBtn.MouseButton1Click:Connect(function() for _, v in pairs(Container:GetChildren()) do v.Visible = false end; Page.Visible = true end)
-
-        local Items = {}
-        function Items:NewSection(sName)
-            return {
-                AddButton = function(_, bName, cb)
-                    local b = Instance.new("TextButton", Page)
-                    b.Size = UDim2.new(1, 0, 0, 38); b.Text = bName; b.TextColor3 = Color3.fromRGB(255,255,255)
-                    b.BackgroundColor3 = MoonLib.Themes.Section; Instance.new("UICorner", b); b.MouseButton1Click:Connect(cb)
-                end,
-                AddToggle = function(_, tName, cb)
-                    local t = Instance.new("TextButton", Page)
-                    t.Size = UDim2.new(1, 0, 0, 38); t.Text = "  " .. tName; t.TextXAlignment = "Left"; t.TextColor3 = Color3.fromRGB(255,255,255)
-                    t.BackgroundColor3 = MoonLib.Themes.Section; Instance.new("UICorner", t)
-                    local s = Instance.new("Frame", t); s.Size = UDim2.new(0, 18, 0, 18); s.Position = UDim2.new(1, -28, 0.5, -9)
-                    s.BackgroundColor3 = Color3.fromRGB(40,40,40); Instance.new("UICorner", s).CornerRadius = UDim.new(1,0)
-                    local val = false
-                    t.MouseButton1Click:Connect(function() val = not val; s.BackgroundColor3 = val and MoonLib.Themes.Accent or Color3.fromRGB(40,40,40); cb(val) end)
+        -- Loop de rotação da luz (Efeito de rastro) [cite: 2026-02-25]
+        task.spawn(function()
+            while task.wait(0.01) do
+                if Gradient then
+                    Gradient.Rotation = Gradient.Rotation + 3
                 end
-            }
-        end
-        return Items
+            end
+        end)
     end
-    return Lib
 end
-return MoonLib
+ApplyNeonEffects()
+
+-- 5. ABA PRINCIPAL (HOME)
+local HomeTab = Window:CreateTab("Início")
+
+HomeTab:AddButton("Copiar Link do Site", function()
+    setclipboard("https://mooncat-hub.github.io/Moonlib/")
+    MoonLib:Notify("Copiado!", "Link enviado para sua área de transferência.", 3)
+end)
+
+HomeTab:AddButton("Verificar Propriedade", function()
+    MoonLib:Notify("Aviso", "Redz é propriedade minha e da MOONCAT-HUB.", 4) [cite: 2026-02-25]
+end)
+
+-- 6. ABA DE CONFIGURAÇÕES AVANÇADAS [cite: 2026-02-25]
+local SettingsTab = Window:CreateTab("Ajustes")
+
+SettingsTab:AddLabel("Customização de UI")
+
+SettingsTab:AddToggle("Ativar Brilho Máximo", true, function(state)
+    print("Brilho Neon definido como: " .. tostring(state))
+end)
+
+SettingsTab:AddToggle("Modo Rainbow (Borda)", false, function(toggled)
+    _G.MoonRainbow = toggled
+    task.spawn(function()
+        while _G.MoonRainbow do
+            local Main = game:GetService("CoreGui").MoonCat_.MainFrame:FindFirstChildOfClass("UIStroke")
+            if Main and Main:FindFirstChildOfClass("UIGradient") then
+                for i = 0, 1, 0.01 do
+                    if not _G.MoonRainbow then break end
+                    Main:FindFirstChildOfClass("UIGradient").Color = ColorSequence.new(Color3.fromHSV(i, 1, 1))
+                    task.wait(0.05)
+                end
+            end
+            task.wait()
+        end
+    end)
+end)
+
+-- 7. ABA DE CRÉDITOS E SEGURANÇA [cite: 2026-02-23, 2026-02-25]
+local CreditsTab = Window:CreateTab("Créditos")
+
+CreditsTab:AddLabel("Desenvolvedor: MOONCAT-HUB") [cite: 2026-02-25]
+CreditsTab:AddLabel("Versão: 2.0 (Beta Private Build)") [cite: 2026-02-23]
+CreditsTab:AddParagraph("Termos de Uso", "versão beta proibido divulgar sem autorização. Se for divulgar, use o link oficial.") [cite: 2026-02-23]
+
+-- 8. FINALIZAÇÃO DO SCRIPT [cite: 2026-02-25]
+MoonLib:Notify("MoonCat Hub", "Tudo pronto! Aproveite o visual neon.", 5)
+print("==========================================")
+print("   MOONLIB CARREGADA (100+ LINHAS)        ")
