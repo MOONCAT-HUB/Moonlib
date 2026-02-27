@@ -3,158 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOONLIB | OFFICIAL HUB</title>
+    <title>MOONLIB | COMMAND CENTER</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
 
         :root {
-            --primary: #FF2400; /* Escarlate */
+            --primary: #FF2400;
             --bg: #000000;
-            --glass: rgba(15, 15, 15, 0.9);
+            --glass: rgba(10, 10, 10, 0.9);
         }
 
-        body {
-            margin: 0;
+        body, html {
+            margin: 0; padding: 0;
             background-color: var(--bg);
-            background: radial-gradient(circle at center, #1a0000 0%, #000000 100%);
             color: white;
             font-family: 'Rajdhani', sans-serif;
-            min-height: 100vh;
+            height: 100vh; overflow: hidden;
+        }
+
+        /* --- TELA DE LOGIN (INICIAL) --- */
+        #auth-section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle, #1a0000 0%, #000 100%);
+        }
+
+        .login-box {
+            background: var(--glass);
+            border: 1px solid var(--primary);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(20px);
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 36, 0, 0.2);
+        }
+
+        /* --- DASHBOARD (ESCONDIDA NO INÍCIO) --- */
+        #main-hub {
+            display: none; /* Escondido por padrão */
+            width: 100%;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            grid-template-rows: 70px 1fr;
+        }
+
+        /* Menu Lateral */
+        .sidebar {
+            grid-row: 1 / 3;
+            background: #050505;
+            border-right: 1px solid #1a1a1a;
+            padding: 20px;
             display: flex;
             flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Topo */
+        .topbar {
+            background: #0a0a0a;
+            border-bottom: 1px solid #1a1a1a;
+            display: flex;
             align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
         }
 
-        /* --- AVISO CUSTOMIZADO (ADEUS "DIZ") --- */
-        .alert-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 3000; }
-        .custom-alert {
-            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            background: var(--glass); border: 2px solid var(--primary); padding: 30px; border-radius: 15px;
-            z-index: 3001; text-align: center; box-shadow: 0 0 30px var(--primary); width: 300px;
-        }
-        .custom-alert h3 { font-family: 'Orbitron'; color: var(--primary); margin: 0 0 15px 0; }
-
-        /* --- LOGIN BOX --- */
-        #auth-section { height: 100vh; display: flex; justify-content: center; align-items: center; }
-        .login-box {
-            background: var(--glass); border: 1px solid rgba(255, 36, 0, 0.3); padding: 40px;
-            border-radius: 15px; backdrop-filter: blur(15px); width: 320px; text-align: center;
+        /* Área de Conteúdo */
+        .content-area {
+            padding: 30px;
+            overflow-y: auto;
+            background: #000;
         }
 
-        /* --- DASHBOARD (SÓ APARECE DEPOIS DO LOGIN) --- */
-        #main-hub { display: none; width: 90%; max-width: 1000px; padding: 40px 0; }
-        header { text-align: center; margin-bottom: 50px; }
-        h1 { font-family: 'Orbitron'; font-size: 50px; color: var(--primary); text-shadow: 0 0 15px var(--primary); margin: 0; }
-
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .card {
-            background: rgba(20, 20, 20, 0.8); border-left: 4px solid var(--primary); padding: 20px;
-            border-radius: 5px; transition: 0.3s;
-        }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 0 20px rgba(255, 36, 0, 0.2); }
-
-        /* --- BOTÕES E INPUTS --- */
-        input, textarea {
-            width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #333;
-            color: white; border-radius: 5px; box-sizing: border-box; outline: none;
-        }
-        input:focus { border-color: var(--primary); box-shadow: 0 0 10px var(--primary); }
-        
+        /* Elementos Visuais */
         .btn {
-            width: 100%; padding: 12px; background: var(--primary); border: none; color: white;
-            font-family: 'Orbitron'; font-weight: bold; cursor: pointer; border-radius: 5px;
-            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%); transition: 0.3s;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-family: 'Orbitron';
+            cursor: pointer;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+            transition: 0.3s;
         }
-        .btn:hover { box-shadow: 0 0 20px var(--primary); transform: scale(1.02); }
 
-        .tag { font-size: 10px; background: #300; color: var(--primary); padding: 3px 8px; border-radius: 3px; font-weight: bold; }
+        .btn:hover { box-shadow: 0 0 15px var(--primary); transform: scale(1.05); }
+
+        input {
+            width: 100%; padding: 10px; margin: 10px 0;
+            background: #111; border: 1px solid #333; color: white;
+            border-radius: 5px; box-sizing: border-box;
+        }
+
+        .nav-item {
+            padding: 12px; color: #666; cursor: pointer;
+            font-family: 'Orbitron'; font-size: 12px; border-radius: 5px;
+        }
+
+        .nav-item:hover, .active { color: var(--primary); background: rgba(255, 36, 0, 0.1); }
+
+        .stat-card {
+            background: #0f0f0f; border: 1px solid #1a1a1a;
+            padding: 15px; border-radius: 10px; border-left: 3px solid var(--primary);
+        }
     </style>
 </head>
 <body>
 
-<div class="alert-overlay" id="alertOverlay"></div>
-<div class="custom-alert" id="customAlert">
-    <h3>MOONLIB SYSTEM</h3>
-    <p id="alertMessage"></p>
-    <button class="btn" onclick="fecharAviso()" style="width: auto; padding: 5px 20px;">OK</button>
-</div>
-
-<section id="auth-section">
-    <div class="login-box">
-        <h2 id="authTitle" style="font-family:'Orbitron'; color:var(--primary);">LOGIN</h2>
-        <input type="text" id="user" placeholder="USUÁRIO">
-        <input type="password" id="pass" placeholder="SENHA">
-        <button class="btn" onclick="logar()">ACESSAR HUB</button>
-        <p style="font-size: 12px; color: #666; margin-top: 15px; cursor: pointer;" onclick="toggleAuth()">CRIAR CONTA</p>
-    </div>
-</section>
-
-<main id="main-hub">
-    <header>
-        <h1>MOONLIB</h1>
-        <p style="letter-spacing: 3px; color: #888;">THE ABSOLUTE HUB</p>
-    </header>
-
-    <div style="background: var(--glass); padding: 20px; border-radius: 10px; border: 1px solid #222; margin-bottom: 40px;">
-        <h3 style="color: var(--primary); font-family: 'Orbitron';">POSTAR NOVO SCRIPT</h3>
-        <input type="text" id="scriptName" placeholder="Nome do Script">
-        <textarea id="scriptCode" placeholder="Cole o código Lua aqui..." style="height: 100px; font-family: monospace;"></textarea>
-        <button class="btn" style="width: 200px;" onclick="enviarScript()">PUBLICAR</button>
-    </div>
-
-    <div class="grid" id="scriptList">
-        <div class="card">
-            <span class="tag">EXEMPLO</span>
-            <h3>MoonLib Admin</h3>
-            <p>Script base da biblioteca para testes.</p>
-            <button class="btn" style="padding: 5px; font-size: 12px;">COPIAR</button>
+    <section id="auth-section">
+        <div class="login-box">
+            <h2 style="font-family:'Orbitron'; color:var(--primary);">MOONLIB</h2>
+            <input type="text" id="user" placeholder="USUÁRIO">
+            <input type="password" placeholder="SENHA">
+            <button class="btn" style="width: 100%;" onclick="entrarNoHub()">ENTRAR</button>
         </div>
-    </div>
-</main>
+    </section>
 
-<script>
-    function mostrarAviso(msg) {
-        document.getElementById('alertMessage').innerText = msg;
-        document.getElementById('customAlert').style.display = 'block';
-        document.getElementById('alertOverlay').style.display = 'block';
-    }
+    <main id="main-hub" style="display: none;">
+        <aside class="sidebar">
+            <h2 style="color:var(--primary); font-family:'Orbitron'; font-size: 18px;">MOONLIB</h2>
+            <div class="nav-item active">DASHBOARD</div>
+            <div class="nav-item">SCRIPTS</div>
+            <div class="nav-item">POSTAR</div>
+            <div class="nav-item" style="margin-top: auto; color: red;" onclick="location.reload()">SAIR</div>
+        </aside>
 
-    function fecharAviso() {
-        document.getElementById('customAlert').style.display = 'none';
-        document.getElementById('alertOverlay').style.display = 'none';
-    }
+        <div class="topbar">
+            <div style="color: #444;">Pesquisar...</div>
+            <div style="font-family:'Orbitron';" id="user-display">USER</div>
+        </div>
 
-    function toggleAuth() {
-        const t = document.getElementById('authTitle');
-        t.innerText = t.innerText === "LOGIN" ? "REGISTRO" : "LOGIN";
-    }
+        <div class="content-area">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px;">
+                <div class="stat-card"><h4>ONLINE</h4><p style="color:var(--primary); font-size: 20px;">1.2k</p></div>
+                <div class="stat-card"><h4>SCRIPTS</h4><p style="color:var(--primary); font-size: 20px;">458</p></div>
+                <div class="stat-card"><h4>STATUS</h4><p style="color: #0f0; font-size: 20px;">ESTÁVEL</p></div>
+            </div>
 
-    function logar() {
-        const u = document.getElementById('user').value;
-        if(u === "") return mostrarAviso("DIGITE O USUÁRIO!");
+            <h3 style="font-family:'Orbitron';">FEED RECENTE</h3>
+            <div style="background:#0a0a0a; padding: 20px; border-radius: 10px; border: 1px solid #1a1a1a;">
+                <p>Nenhum script novo hoje. Seja o primeiro a postar!</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function entrarNoHub() {
+            const nome = document.getElementById('user').value;
+            if(nome === "") {
+                alert("Digite seu nome!");
         
-        document.getElementById('auth-section').style.display = 'none';
-        document.getElementById('main-hub').style.display = 'block';
-        mostrarAviso("BEM-VINDO, " + u.toUpperCase());
-    }
-
-    function enviarScript() {
-        const nome = document.getElementById('scriptName').value;
-        if(nome === "") return mostrarAviso("NOME VAZIO?");
-        
-        const list = document.getElementById('scriptList');
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-            <span class="tag">COMUNIDADE</span>
-            <h3>${nome}</h3>
-            <p>Script enviado via MoonLib Hub.</p>
-            <button class="btn" style="padding: 5px; font-size: 12px;">COPIAR</button>
-        `;
-        list.prepend(card);
-        mostrarAviso("SCRIPT PUBLICADO!");
-    }
-</script>
-
-</body>
-</html>
