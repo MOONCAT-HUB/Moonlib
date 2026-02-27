@@ -1,21 +1,27 @@
 # 🌙 MoonLib - Official Repository
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Status-Beta-purple?style=for-the-badge">
-  <img src="https://img.shields.io/badge/Owner-MoonCat-blueviolet?style=for-the-badge">
-</p>
+![Status](https://img.shields.io/badge/STATUS-ACTIVE-00ffcc?style=for-the-badge)
+![Version](https://img.shields.io/badge/VERSION-BETA-ffcc00?style=for-the-badge)
+![Owner](https://img.shields.io/badge/OWNER-MOONCAT-9b59b6?style=for-the-badge)
 
 ---
 
-## 🚀 Sobre o Projeto
-A **MoonLib** é a biblioteca definitiva de interface para Roblox, agora reivindicada e mantida por **Moon Cat**. Este projeto é uma evolução focada em performance, estilo e exclusividade.
+### 🚀 Sobre o Projeto
+A **MoonLib** é a central definitiva do **Cloud Hub**. Este repositório mantém o sistema principal focado em performance e exclusividade para os usuários.
 
-> "MoonCat novo dono do redz ou como chamado novo Moonlib"
+* **Cloud Hub PC**: Scripts de elite desenvolvidos para Windows.
+* **Cloud Hub Mobile**: Otimização total para dispositivos móveis.
 
 ---
 
-## 📥 Como Usar
-Para carregar a biblioteca no seu executor (Delta, Fluxus, etc.), utilize o comando oficial abaixo:
+### 🌐 Website Oficial
+Acesse o Dashboard oficial para gerenciar e copiar seus scripts:
+👉 **[https://mooncat-hub.github.io/Moonlib/](https://mooncat-hub.github.io/Moonlib/)**
+
+---
+
+### 📦 Loader Oficial
+Utilize o comando abaixo no seu executor para iniciar o sistema:
 
 ```lua
-loadstring(game:HttpGet("[https://raw.githubusercontent.com/MOONCAT-HUB/Moonlib/main/moonlib.lua](https://raw.githubusercontent.com/MOONCAT-HUB/Moonlib/main/moonlib.lua)"))()
+loadstring(game:HttpGet("[https://raw.githubusercontent.com/MOONCAT-HUB/Moonlib/main/data.lua](https://raw.githubusercontent.com/MOONCAT-HUB/Moonlib/main/data.lua)"))()
