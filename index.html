@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CENTRO THZ SITES</title>
-    
     <link rel="icon" href="1000026426.jpg" type="image/jpeg">
 
     <style>
@@ -65,57 +64,65 @@
             background-color: #222;
             transform: scale(1.05);
             color: #00e5ff;
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
         }
 
-        /* Botão Cinza para "Em Andamento" */
-        .link-item.disabled {
-            background-color: #444;
-            color: #888;
-            border-color: #555;
-            cursor: not-allowed;
-        }
-        .link-item.disabled:hover {
-            transform: none;
-            box-shadow: none;
-        }
-
-        /* --- GLITTER AZUL --- */
-        .glitter-container {
+        /* --- MODAL PERSONALIZADO (AVISO) --- */
+        .modal {
+            display: none;
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 1;
+            z-index: 100;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            align-items: center;
+            justify-content: center;
         }
 
-        .dot {
-            position: absolute;
-            width: 6px; height: 6px;
-            background-color: #00e5ff;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #00e5ff;
-            bottom: -10px;
-            animation: moveUp 4s linear infinite;
+        .modal-content {
+            background-color: #1a1a1a;
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #bf953f;
+            text-align: center;
+            max-width: 280px;
+            color: #fcf6ba;
+            box-shadow: 0 0 20px rgba(191, 149, 63, 0.5);
         }
 
+        .modal-content h2 { margin-top: 0; font-size: 1.2rem; }
+        .close-btn {
+            margin-top: 20px;
+            background-color: #bf953f;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* --- GLITTER --- */
+        .glitter-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .dot { position: absolute; width: 6px; height: 6px; background-color: #00e5ff; border-radius: 50%; box-shadow: 0 0 10px #00e5ff; bottom: -10px; animation: moveUp 4s linear infinite; }
         .dot:nth-child(1) { left: 10%; animation-delay: 0s; }
-        .dot:nth-child(2) { left: 30%; animation-delay: 1.5s; width: 4px; }
-        .dot:nth-child(3) { left: 55%; animation-delay: 0.5s; }
-        .dot:nth-child(4) { left: 80%; animation-delay: 2.5s; width: 5px; }
-        .dot:nth-child(5) { left: 90%; animation-delay: 1s; }
+        .dot:nth-child(2) { left: 35%; animation-delay: 1.5s; }
+        .dot:nth-child(3) { left: 60%; animation-delay: 0.5s; }
+        .dot:nth-child(4) { left: 85%; animation-delay: 2.5s; }
 
-        @keyframes moveUp {
-            0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(-110vh); opacity: 0; }
-        }
+        @keyframes moveUp { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-110vh); opacity: 0; } }
     </style>
 </head>
 <body>
 
     <div class="glitter-container">
-        <div class="dot"></div><div class="dot"></div>
-        <div class="dot"></div><div class="dot"></div>
-        <div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+
+    <div id="avisoModal" class="modal">
+        <div class="modal-content">
+            <h2>⚠️ AVISO</h2>
+            <p>O conteúdo **FF SENSE** está sendo preparado e estará disponível em breve!</p>
+            <button class="close-btn" onclick="fecharModal()">ENTENDIDO</button>
+        </div>
     </div>
 
     <img src="1000026426.jpg" class="profile-pic" alt="Perfil">
@@ -127,10 +134,15 @@
         <a href="#" class="link-item">NOSSOS SITES</a>
         <a href="#" class="link-item">INSTAGRAM OFICIAL</a>
         
-        <a href="javascript:void(0)" class="link-item disabled" onclick="alert('Em andamento...')">FF SENSE (Em andamento)</a>
+        <div class="link-item" onclick="abrirModal()">FF SENSE (Em andamento)</div>
         
         <a href="#" class="link-item">SUPORTE WHATSAPP</a>
     </div>
+
+    <script>
+        function abrirModal() { document.getElementById("avisoModal").style.display = "flex"; }
+        function fecharModal() { document.getElementById("avisoModal").style.display = "none"; }
+    </script>
 
 </body>
 </html>
