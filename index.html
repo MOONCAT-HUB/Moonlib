@@ -3,71 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOONLIB | ANÚNCIO</title>
+    <title>Links Bio</title>
+    
+    <link rel="icon" href="1000026426.jpg" type="image/jpeg">
+
     <style>
         body {
-            background-color: #050505;
-            color: #ffffff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Fundo Dourado Premium */
+            background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fcf6ba, #aa771c);
+            color: #1a1a1a;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
+            padding: 50px 20px;
             margin: 0;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        .main-box {
+        /* Foto de Perfil com a imagem que você enviou */
+        .profile-pic {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 4px solid #1a1a1a; /* Borda preta pra combinar com o Feitan */
+            margin-bottom: 15px;
+            object-fit: cover;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            z-index: 10;
+        }
+
+        h1 { font-size: 1.4rem; margin-bottom: 5px; z-index: 10; text-shadow: 1px 1px 2px rgba(255,255,255,0.5); }
+        p { font-size: 1rem; margin-bottom: 30px; font-weight: bold; z-index: 10; }
+
+        .links-container {
+            width: 100%;
+            max-width: 350px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 10;
+        }
+
+        .link-item {
+            display: block;
+            background-color: #000; /* Botão preto para destacar no ouro */
+            color: #fff;
+            padding: 16px;
             text-align: center;
-            border-left: 5px solid #bc13fe;
-            padding: 20px 40px;
-            background: rgba(188, 19, 254, 0.05);
-        }
-
-        h1 {
-            color: #bc13fe;
-            font-size: 3.5rem;
-            margin-bottom: 10px;
-            letter-spacing: 10px;
-            text-transform: uppercase;
-        }
-
-        .sub-text {
-            font-size: 1.1rem;
-            color: #888;
-            margin-bottom: 30px;
-        }
-
-        .announcement {
-            background: #111;
-            padding: 15px;
-            border-radius: 5px;
-            font-style: italic;
-            border: 1px dashed #444;
-        }
-
-        .author {
-            margin-top: 40px;
+            text-decoration: none;
+            border-radius: 8px;
             font-weight: bold;
-            color: #bc13fe;
-            letter-spacing: 3px;
+            transition: 0.3s;
+            border: 1px solid #bf953f;
+        }
+
+        .link-item:hover {
+            background-color: #222;
+            transform: scale(1.05);
+            color: #00e5ff; /* Texto brilha em azul no hover */
+        }
+
+        /* --- GLITTER AZUL --- */
+        .glitter-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .dot {
+            position: absolute;
+            width: 5px; height: 5px;
+            background-color: #00e5ff;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #00e5ff;
+            bottom: -10px;
+            animation: moveUp 4s linear infinite;
+        }
+
+        /* Variações do glitter */
+        .dot:nth-child(1) { left: 15%; animation-delay: 0s; }
+        .dot:nth-child(2) { left: 40%; animation-delay: 1s; width: 3px; height: 3px; }
+        .dot:nth-child(3) { left: 70%; animation-delay: 2s; }
+        .dot:nth-child(4) { left: 85%; animation-delay: 0.5s; width: 4px; height: 4px; }
+        .dot:nth-child(5) { left: 25%; animation-delay: 3s; }
+
+        @keyframes moveUp {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-110vh); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div class="main-box">
-        <h1>MOONLIB</h1>
-        <div class="sub-text">versão beta</div>
-        
-        <div class="announcement">
-            "Quer divulgar divulgue mísera kk"
-        </div>
-
-        <p style="margin-top: 20px; color: #555;">Quem leu isso já sabe o que vem por aí.</p>
-
-        <div class="author">BY MOONCAT</div>
+    <div class="glitter-container">
+        <div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div>
     </div>
 
-</body>
-</html>
+    <img src="1000026426.jpg" class="profile-pic" alt="Perfil">
+
+    <h1>@SeuNome</h1>
+    <p>Acompanhe meus links 👇</p>
+
+    <div class="links-container">
+        <a href="COLOQUE_SEU_LINK_AQUI" class="link-item">MEU GRUPO</a>
+        <a href="COLOQUE_SEU_LINK_AQUI" class="link-item">INSTAGRAM</a>
+        <a href="COLOQUE_SEU_LINK
+            
