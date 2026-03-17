@@ -1,181 +1,238 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CENTRO THZ SITES</title>
-    
-    <link rel="icon" href="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAsJCQgJCQcJCQgJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQn/2wBDAQwLCwoLCw0MDgwNDw4PDh4QEBEQEBEREBAQEBEREBAQEBEREBAQEBEREBAQEBEREBAQEBEREBAQEBEREBAQEBD/wAARCAA5ADkDASIAAhEBAxEB/8QAGQABAQEBAQEAAAAAAAAAAAAAAAIEAwEF/8QAJRABAAICAgEEAwEBAAAAAAAAAAECAxEEMUESEyEiMlFhcbEF/8QAGAEBAQEBAQAAAAAAAAAAAAAAAAQCAwX/8QAJhEBAAICAgEDAwUAAAAAAAAAAAECAxEEMUESIVEiE2GxEGFxgf/aAAwDAQatdo*1000">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THZ GHOST SENSES</title>
     <style>
-        * { box-sizing: border-box; }
+        /* Configurações de Fundo e Fonte */
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fcf6ba, #aa771c);
-            color: #1a1a1a;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px 15px;
             margin: 0;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Moldura Premium da Foto */
-        .profile-pic {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 5px solid #000;
-            margin-bottom: 15px;
-            object-fit: cover;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-            z-index: 10;
-        }
-
-        h1 { font-size: 1.6rem; margin: 0 0 5px 0; z-index: 10; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; text-align: center; }
-        p { font-size: 1rem; margin: 0 0 35px 0; font-weight: bold; z-index: 10; color: #222; text-align: center; }
-
-        .links-container {
-            width: 100%;
-            max-width: 360px;
+            padding: 0;
+            background-color: #8B0000; /* Fundo Vermelho Escuro */
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden; 
             display: flex;
             flex-direction: column;
-            gap: 18px;
-            z-index: 10;
+            min-height: 100vh;
         }
 
-        .link-item {
-            display: block;
-            background-color: #000;
-            color: #fff;
-            padding: 18px;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 15px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            border: 1px solid #bf953f;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 1rem;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Efeito de Brilho */
-        .link-item::after {
-            content: '';
+        /* Sistema de Glitter */
+        #glitter-container {
             position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 30%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.25);
-            transform: rotate(30deg);
-            animation: shine 4s infinite;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
         }
 
-        @keyframes shine {
-            0% { left: -60%; }
-            15% { left: 130%; }
-            100% { left: 130%; }
+        .glitter {
+            position: absolute;
+            bottom: -10px;
+            background-color: #ffffff; /* Glitter Branco */
+            border-radius: 50%;
+            box-shadow: 0 0 5px #fff;
+            opacity: 0.8;
+            animation: floatUp linear infinite;
         }
 
-        .link-item:hover {
-            background-color: #222;
-            transform: scale(1.04);
-            color: #00e5ff;
-            box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+        @keyframes floatUp {
+            to {
+                transform: translateY(-105vh);
+                opacity: 0;
+            }
         }
 
-        /* Modal Ajustado */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 100;
-            left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.92);
+        /* Área de Conteúdo Central */
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background-color: #1a1a1a;
-            padding: 35px;
-            border-radius: 20px;
-            border: 2px solid #bf953f;
             text-align: center;
-            max-width: 300px;
-            color: #fff;
-            box-shadow: 0 0 30px rgba(191, 149, 63, 0.7);
+            padding: 20px;
+            z-index: 1;
         }
 
-        .modal-content h2 { color: #bf953f; margin-top: 0; font-size: 1.4rem; letter-spacing: 1px; }
-        .modal-content p { color: #fcf6ba; font-size: 1rem; margin: 15px 0; }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
 
-        .close-btn {
-            margin-top: 25px;
-            background-color: #bf953f;
-            color: #000;
+        p.subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #ffcccc;
+        }
+
+        /* Inputs e Botões */
+        input {
+            padding: 15px;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 8px;
+            border: 2px solid #fff;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+            outline: none;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        input::placeholder {
+            color: #ffb3b3;
+        }
+
+        button {
+            padding: 15px 40px;
+            border-radius: 8px;
             border: none;
-            padding: 14px 30px;
-            border-radius: 10px;
+            background-color: #000000;
+            color: #ffffff;
+            font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            width: 100%;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
-        /* Glitter Azul */
-        .glitter-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
-        .dot { position: absolute; width: 6px; height: 6px; background-color: #00e5ff; border-radius: 50%; box-shadow: 0 0 10px #00e5ff; bottom: -10px; animation: moveUp 5s linear infinite; }
-        .dot:nth-child(1) { left: 15%; animation-delay: 0s; }
-        .dot:nth-child(2) { left: 45%; animation-delay: 2s; width: 4px; }
-        .dot:nth-child(3) { left: 75%; animation-delay: 1s; }
-        .dot:nth-child(4) { left: 90%; animation-delay: 3s; width: 5px; }
+        button:hover {
+            background-color: #333333;
+            transform: scale(1.05);
+        }
 
-        @keyframes moveUp { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-110vh); opacity: 0; } }
+        /* Resultado da Sensi */
+        #result {
+            margin-top: 30px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #ff4d4d;
+            width: 80%;
+            max-width: 400px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 5px;
+        }
+
+        /* Rodapé com Direitos Autorais */
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.85);
+            font-size: 14px;
+            z-index: 1;
+            letter-spacing: 1px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="glitter-container">
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div id="glitter-container"></div>
+
+    <div class="content">
+        <h1>THZ GHOST SENSES</h1>
+        <p class="subtitle">Motor de Precisão Algorítmica para Mobile</p>
+        
+        <input type="text" id="phoneModel" placeholder="Digite o modelo do celular (Ex: iPhone 11)">
+        <button onclick="generateSense()">CALCULAR SENSI</button>
+        
+        <div id="result" class="hidden">
+            </div>
     </div>
 
-    <div id="avisoModal" class="modal">
-        <div class="modal-content">
-            <h2>⚠️ AVISO</h2>
-            <p>O conteúdo <strong>FF SENSE</strong> está em andamento e será liberado em breve!</p>
-            <button class="close-btn" onclick="fecharModal()">ENTENDIDO</button>
-        </div>
-    </div>
-
-    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAsJCQgJCQcJCQgJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQn/2wBDAQwLCwoLCw0MDgwNDw4PDh4QEBEQEBEREBAQEBEREBAQEBEREBAQEBEREBAQEBEREBAQEBEREBAQEBEREBAQEBD/wAARCAA5ADkDASIAAhEBAxEB/8QAGQABAQEBAQEAAAAAAAAAAAAAAAIEAwEF/8QAJRABAAICAgEEAwEBAAAAAAAAAAECAxEEMUESEyEiMlFhcbEF/8QAGAEBAQEBAQAAAAAAAAAAAAAAAAQCAwX/8QAJhEBAAICAgEDAwUAAAAAAAAAAAECAxEEMUESIVEiE2GxEGFxgf/aAAwDAQatdo*1000" class="profile-pic" alt="Perfil">
-
-    <h1>CENTRO THZ SITES</h1>
-    <p>Acesse nossos canais oficiais 👇</p>
-
-    <div class="links-container">
-        <a href="https://wa.me/5582999999999" class="link-item">SUPORTE WHATSAPP</a>
-        
-        <a href="https://instagram.com/centro_thz_sites" class="link-item">INSTAGRAM OFICIAL</a>
-        
-        <div class="link-item" onclick="abrirModal()">FF SENSE (Em andamento)</div>
-        
-        <a href="#" class="link-item">NOSSOS SITES</a>
-    </div>
+    <footer>
+        &copy; 2026 THZ GHOST SENSES. Todos os direitos reservados.
+    </footer>
 
     <script>
-        function abrirModal() { document.getElementById("avisoModal").style.display = "flex"; }
-        function fecharModal() { document.getElementById("avisoModal").style.display = "none"; }
-    </script>
+        // 1. Lógica do Fundo com Glitter Branco Subindo
+        function createGlitter() {
+            const container = document.getElementById('glitter-container');
+            const glitter = document.createElement('div');
+            glitter.classList.add('glitter');
 
+            // Tamanho aleatório entre 2px e 5px
+            const size = Math.random() * 3 + 2; 
+            glitter.style.width = size + 'px';
+            glitter.style.height = size + 'px';
+            
+            // Posição horizontal aleatória
+            glitter.style.left = Math.random() * 100 + 'vw';
+            
+            // Velocidade de subida aleatória entre 3s e 7s
+            glitter.style.animationDuration = Math.random() * 4 + 3 + 's'; 
+
+            container.appendChild(glitter);
+
+            // Remove o glitter depois que ele sair da tela para não travar o celular
+            setTimeout(() => {
+                glitter.remove();
+            }, 7000);
+        }
+
+        // Gera um novo glitter a cada 40 milissegundos
+        setInterval(createGlitter, 40);
+
+        // 2. Lógica Algorítmica (Simulação de IA para precisão)
+        function generateSense() {
+            const phone = document.getElementById('phoneModel').value.trim().toLowerCase();
+            const resultDiv = document.getElementById('result');
+
+            if (!phone) {
+                alert("Por favor, digite o modelo de um telefone para o motor calcular.");
+                return;
+            }
+
+            // Função Hash: Transforma o nome do celular em um número único base.
+            // Isso garante que a "IA" dê sempre a mesma sensi perfeita para o mesmo celular.
+            let hash = 0;
+            for (let i = 0; i < phone.length; i++) {
+                hash = phone.charCodeAt(i) + ((hash << 5) - hash);
+            }
+
+            // Cálculos baseados no hash (Gera números realistas de 75 a 100)
+            const calc = (offset, min, max) => Math.abs((hash + offset) % (max - min + 1)) + min;
+
+            const geral = calc(1, 85, 100);
+            const redDot = calc(2, 80, 100);
+            const mira2x = calc(3, 85, 100);
+            const mira4x = calc(4, 88, 100);
+            const awm = calc(5, 15, 45);
+            const dpi = calc(6, 450, 900); // DPI realista entre 450 e 900
+
+            // Mostra o resultado na tela
+            resultDiv.innerHTML = `
+                <h3 style="color: #ff4d4d; margin-top: 0;">Sensi Encontrada!</h3>
+                <div class="result-item"><span>Geral:</span> <strong>${geral}</strong></div>
+                <div class="result-item"><span>Red Dot:</span> <strong>${redDot}</strong></div>
+                <div class="result-item"><span>Mira 2x:</span> <strong>${mira2x}</strong></div>
+                <div class="result-item"><span>Mira 4x:</span> <strong>${mira4x}</strong></div>
+                <div class="result-item"><span>AWM:</span> <strong>${awm}</strong></div>
+                <div class="result-item" style="color: #ff4d4d; margin-top: 15px;"><span>DPI:</span> <strong>${dpi}</strong></div>
+            `;
+            
+            resultDiv.classList.remove('hidden');
+        }
+    </script>
 </body>
 </html>
