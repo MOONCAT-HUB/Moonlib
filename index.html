@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THZ GHOST SENSES | SUPREMACIA IA</title>
+    <title>THZ GHOST SENSES | NEURAL LAB</title>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --red-dark: #4d0000;
-            --red-glow: #ff0000;
-            --glass: rgba(10, 10, 10, 0.85);
-            --border: rgba(255, 0, 0, 0.2);
+            --neon-red: #ff0000;
+            --dark-core: #0a0a0a;
+            --glass-bg: rgba(15, 15, 15, 0.9);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: #200000;
+            background-color: #150000;
             color: #fff;
             font-family: 'Rajdhani', sans-serif;
             height: 100vh;
@@ -27,131 +26,115 @@
             align-items: center;
         }
 
-        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; }
 
-        /* Estrutura do Dashboard */
-        .dashboard {
+        .app-container {
             width: 95%;
-            max-width: 1000px;
-            height: 85vh;
-            background: var(--glass);
-            backdrop-filter: blur(25px);
-            border: 1px solid var(--border);
+            max-width: 850px;
+            background: var(--glass-bg);
+            border: 1px solid rgba(255, 0, 0, 0.2);
             border-radius: 20px;
             display: grid;
-            grid-template-columns: 250px 1fr;
-            box-shadow: 0 0 100px rgba(0,0,0,0.9);
+            grid-template-columns: 260px 1fr;
+            height: 85vh;
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
             overflow: hidden;
         }
 
-        /* Sidebar - Opções */
+        /* Sidebar com Opções de Ajuste */
         .sidebar {
-            background: rgba(0, 0, 0, 0.4);
-            border-right: 1px solid var(--border);
-            padding: 30px 20px;
+            background: rgba(0,0,0,0.4);
+            border-right: 1px solid rgba(255,0,0,0.1);
+            padding: 25px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
         }
 
-        .logo {
+        .logo-area h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
-            color: var(--red-glow);
-            text-align: center;
-            margin-bottom: 40px;
-            text-shadow: 0 0 10px var(--red-glow);
+            font-size: 1rem;
+            color: var(--neon-red);
+            text-shadow: 0 0 10px var(--neon-red);
+            margin-bottom: 30px;
         }
 
-        .nav-btn {
-            padding: 15px;
-            background: transparent;
-            border: 1px solid transparent;
-            color: #aaa;
-            cursor: pointer;
-            text-align: left;
+        .option-group { display: flex; flex-direction: column; gap: 8px; }
+        .option-group label { font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+        
+        select, input {
+            background: #000;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 12px;
             border-radius: 8px;
-            transition: 0.3s;
-            font-weight: bold;
-            text-transform: uppercase;
+            font-family: 'Rajdhani', sans-serif;
+            outline: none;
             font-size: 0.9rem;
         }
 
-        .nav-btn.active {
-            background: rgba(255, 0, 0, 0.1);
-            border-color: var(--red-glow);
+        select:focus, input:focus { border-color: var(--neon-red); }
+
+        /* Área Principal */
+        .main-panel { padding: 40px; display: flex; flex-direction: column; overflow-y: auto; }
+
+        .header-main h2 { font-family: 'Orbitron', sans-serif; margin-bottom: 10px; }
+        .header-main p { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+
+        .btn-generate {
+            background: var(--neon-red);
             color: #fff;
-        }
-
-        /* Área de Conteúdo */
-        .main-content { padding: 40px; overflow-y: auto; position: relative; }
-
-        .tab-content { display: none; animation: fadeIn 0.5s ease; }
-        .tab-content.active { display: block; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        h2 { font-family: 'Orbitron', sans-serif; margin-bottom: 20px; letter-spacing: 2px; }
-
-        input {
-            width: 100%;
-            padding: 15px;
-            background: #000;
-            border: 1px solid #333;
-            border-radius: 10px;
-            color: #fff;
-            margin-bottom: 20px;
-            outline: none;
-        }
-
-        button.action-btn {
-            width: 100%;
-            padding: 15px;
-            background: var(--red-glow);
             border: none;
-            color: #fff;
+            padding: 18px;
+            border-radius: 12px;
             font-family: 'Orbitron', sans-serif;
             font-weight: bold;
-            border-radius: 10px;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(255,0,0,0.3);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: 0.3s;
         }
 
-        /* Grid de Resultados */
-        .results-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        .btn-generate:hover { transform: translateY(-2px); box-shadow: 0 0 20px rgba(255,0,0,0.4); }
+
+        /* Grid de Resultados IA */
+        .results-view {
+            display: none;
+            margin-top: 35px;
+            grid-template-columns: repeat(2, 1fr);
             gap: 15px;
-            margin-top: 30px;
+            animation: slideIn 0.5s ease;
         }
 
-        .res-card {
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .res-box {
             background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
             padding: 20px;
             border-radius: 12px;
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.05);
         }
 
-        .res-val { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: var(--red-glow); display: block; }
-        .res-label { font-size: 0.7rem; color: #888; text-transform: uppercase; }
+        .res-box .val { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; display: block; color: #fff; }
+        .res-box .lab { font-size: 0.7rem; color: #555; text-transform: uppercase; margin-top: 5px; }
 
-        footer {
-            position: fixed;
-            bottom: 10px;
-            width: 100%;
+        .dpi-box { grid-column: span 2; border-color: var(--neon-red); }
+        .dpi-box .val { color: var(--neon-red); }
+
+        #ia-status {
+            display: none;
             text-align: center;
-            font-size: 0.7rem;
-            color: #555;
-            z-index: 100;
+            margin-top: 20px;
+            font-family: monospace;
+            color: var(--neon-red);
+            font-size: 0.8rem;
         }
 
-        /* Mobile Responsiveness */
         @media (max-width: 768px) {
-            .dashboard { grid-template-columns: 1fr; height: 95vh; }
-            .sidebar { flex-direction: row; overflow-x: auto; padding: 15px; }
-            .logo { display: none; }
-            .nav-btn { white-space: nowrap; font-size: 0.7rem; }
+            .app-container { grid-template-columns: 1fr; height: 90vh; overflow-y: auto; }
+            .sidebar { border-right: none; border-bottom: 1px solid rgba(255,0,0,0.1); }
+            .main-panel { padding: 25px; }
         }
     </style>
 </head>
@@ -159,151 +142,134 @@
 
     <canvas id="bg-canvas"></canvas>
 
-    <div class="dashboard">
+    <div class="app-container">
         <div class="sidebar">
-            <div class="logo">THZ GHOST</div>
-            <button class="nav-btn active" onclick="openTab(event, 'tab-ia')">Neural Engine</button>
-            <button class="nav-btn" onclick="openTab(event, 'tab-macro')">Regedit/Macro</button>
-            <button class="nav-btn" onclick="openTab(event, 'tab-db')">Database DPI</button>
+            <div class="logo-area"><h1>GHOST SENSES AI</h1></div>
+            
+            <div class="option-group">
+                <label>Dispositivo</label>
+                <input type="text" id="device" placeholder="Ex: Poco X3">
+            </div>
+
+            <div class="option-group">
+                <label>Estilo de Jogo</label>
+                <select id="style">
+                    <option value="1">Equilibrado</option>
+                    <option value="2">Agressivo (Rush)</option>
+                    <option value="3">Precisão (Sniper)</option>
+                </select>
+            </div>
+
+            <div class="option-group">
+                <label>Tipo de Arma</label>
+                <select id="weapon">
+                    <option value="1.1">Todas (Geral)</option>
+                    <option value="1.3">Armas de Um Tiro</option>
+                    <option value="1.0">SMG / Rajada</option>
+                </select>
+            </div>
         </div>
 
-        <div class="main-content">
-            <div id="tab-ia" class="tab-content active">
-                <h2>NEURAL ENGINE v2.0</h2>
-                <p style="color: #888; margin-bottom: 20px;">A IA está treinando os tensores baseados no seu processador...</p>
-                <input type="text" id="phoneInput" placeholder="NOME DO DISPOSITIVO (Ex: S23 Ultra)">
-                <button class="action-btn" onclick="calculateAI()">PROCESSAR SENSI</button>
-
-                <div id="loading-ai" style="display:none; margin-top:20px;">
-                    <p id="ai-status" style="font-size: 0.8rem; color: var(--red-glow);"></p>
-                </div>
-
-                <div class="results-grid" id="ai-results" style="display:none;">
-                    <div class="res-card"><span class="res-label">Geral</span><span class="res-val" id="rGeral">--</span></div>
-                    <div class="res-card"><span class="res-label">Mira 2x</span><span class="res-val" id="r2x">--</span></div>
-                    <div class="res-card"><span class="res-label">Mira 4x</span><span class="res-val" id="r4x">--</span></div>
-                    <div class="res-card" style="border-color: var(--red-glow);"><span class="res-label">DPI IDEAL</span><span class="res-val" id="rDpi">--</span></div>
-                </div>
+        <div class="main-panel">
+            <div class="header-main">
+                <h2>NEURAL LAB v3.0</h2>
+                <p>Configure as opções ao lado para que a IA processe a melhor sensibilidade para o seu estilo.</p>
             </div>
 
-            <div id="tab-macro" class="tab-content">
-                <h2>MACRO & REGEDIT</h2>
-                <p style="color: #888;">Códigos de otimização de resposta de tela (Touch Response).</p>
-                <div style="background:#000; padding:20px; border-radius:10px; margin-top:20px; font-family:monospace; font-size: 0.8rem; color: #0f0;">
-                    [SYSTEM_OPTIMIZER]<br>
-                    touch_speed: 0.001ms<br>
-                    pointer_precision: true<br>
-                    buffer_size: 4096kb<br>
-                    refresh_rate_lock: 120hz
-                </div>
-                <button class="action-btn" style="margin-top:20px;" onclick="alert('Códigos injetados no Buffer do Navegador!')">ATIVAR OTIMIZAÇÃO</button>
-            </div>
+            <button class="btn-generate" onclick="runGhostAI()">Gerar Sensibilidade</button>
 
-            <div id="tab-db" class="tab-content">
-                <h2>DEVICE DATABASE</h2>
-                <p>Configurações pré-definidas para marcas específicas.</p>
-                <table style="width:100%; margin-top:20px; text-align:left; border-collapse: collapse;">
-                    <tr style="border-bottom: 1px solid #333; color: #888;">
-                        <th style="padding:10px;">Marca</th>
-                        <th>DPI Max</th>
-                        <th>Sensibilidade</th>
-                    </tr>
-                    <tr><td style="padding:10px;">SAMSUNG</td><td>960</td><td>Alta</td></tr>
-                    <tr><td style="padding:10px;">XIAOMI</td><td>800</td><td>Média-Alta</td></tr>
-                    <tr><td style="padding:10px;">IPHONE</td><td>N/A</td><td>Ultra</td></tr>
-                </table>
+            <div id="ia-status">Iniciando Redes Neurais...</div>
+
+            <div class="results-view" id="results">
+                <div class="res-box"><span class="val" id="vGeral">0</span><span class="lab">Geral</span></div>
+                <div class="res-box"><span class="val" id="vRed">0</span><span class="lab">Red Dot</span></div>
+                <div class="res-box"><span class="val" id="v2x">0</span><span class="lab">Mira 2x</span></div>
+                <div class="res-box"><span class="val" id="v4x">0</span><span class="lab">Mira 4x</span></div>
+                <div class="res-box dpi-box"><span class="val" id="vDpi">0</span><span class="lab">DPI Recomendada (Android)</span></div>
             </div>
         </div>
     </div>
 
-    <footer>
-        &copy; 2026 THZ GHOST SENSES - O Melhor do Mundo. Direitos Autorais Reservados.
-    </footer>
-
     <script>
-        // 1. Glitter Branco Lento (Canvas)
+        // --- 1. Fundo de Glitter Lento ---
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
-        let particles = [];
+        let dots = [];
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resize);
         resize();
 
-        class Particle {
-            constructor() { this.reset(); }
-            reset() {
+        class Dot {
+            constructor() { this.init(); }
+            init() {
                 this.x = Math.random() * canvas.width;
                 this.y = canvas.height + 10;
-                this.size = Math.random() * 2 + 0.5;
-                this.speed = Math.random() * 0.3 + 0.1;
-                this.opacity = Math.random() * 0.5;
+                this.s = Math.random() * 2;
+                this.sp = Math.random() * 0.3 + 0.1;
+                this.o = Math.random() * 0.5;
             }
-            update() { this.y -= this.speed; if (this.y < -10) this.reset(); }
             draw() {
-                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+                this.y -= this.sp;
+                if(this.y < -10) this.init();
+                ctx.fillStyle = `rgba(255,255,255,${this.o})`;
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.s, 0, Math.PI*2); ctx.fill();
             }
         }
-        for(let i=0; i<80; i++) particles.push(new Particle());
+        for(let i=0; i<60; i++) dots.push(new Dot());
         function animate() {
             ctx.clearRect(0,0,canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
+            dots.forEach(d => d.draw());
             requestAnimationFrame(animate);
         }
         animate();
 
-        // 2. Navegação de Abas
-        function openTab(evt, tabName) {
-            let i, tabcontent, navbtns;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) tabcontent[i].classList.remove("active");
-            navbtns = document.getElementsByClassName("nav-btn");
-            for (i = 0; i < navbtns.length; i++) navbtns[i].classList.remove("active");
-            document.getElementById(tabName).classList.add("active");
-            evt.currentTarget.classList.add("active");
-        }
+        // --- 2. Motor de IA Real (TensorFlow.js) ---
+        async function runGhostAI() {
+            const device = document.getElementById('device').value;
+            if(!device) return alert("Digite o modelo do aparelho!");
 
-        // 3. IA LITERAL COM TENSORFLOW.JS
-        async function calculateAI() {
-            const input = document.getElementById('phoneInput').value;
-            if(!input) return alert("Digite o modelo!");
-
-            const loader = document.getElementById('loading-ai');
-            const results = document.getElementById('ai-results');
-            const status = document.getElementById('ai-status');
+            const style = parseFloat(document.getElementById('style').value);
+            const weapon = parseFloat(document.getElementById('weapon').value);
+            const status = document.getElementById('ia-status');
+            const results = document.getElementById('results');
 
             results.style.display = 'none';
-            loader.style.display = 'block';
+            status.style.display = 'block';
 
-            // Criando uma Rede Neural Real na hora (TensorFlow.js)
+            // Criando Modelo de IA na Hora
             const model = tf.sequential();
-            model.add(tf.layers.dense({units: 10, inputShape: [1], activation: 'relu'}));
+            model.add(tf.layers.dense({units: 8, inputShape: [2], activation: 'relu'}));
             model.add(tf.layers.dense({units: 1}));
-            model.compile({optimizer: 'sgd', loss: 'meanSquaredError'});
+            model.compile({optimizer: 'adam', loss: 'meanSquaredError'});
 
-            // Simulação de Treinamento
-            const stages = ["Inicializando Tensores...", "Treinando Rede Neural...", "Otimizando Pesos...", "Validando Precisão..."];
-            for(let stage of stages) {
-                status.innerText = stage;
+            // Simulação de processamento de variáveis
+            const logs = ["Cruzando dados do dispositivo...", "Ajustando pesos para estilo " + style, "Calculando compensação de recuo...", "Finalizando tensores..."];
+            for(let log of logs) {
+                status.innerText = log;
                 await new Promise(r => setTimeout(r, 600));
             }
 
-            // Gerando valores consistentes baseados na string (Input)
+            // Cálculo Matemático baseado no Input
             let seed = 0;
-            for (let i = 0; i < input.length; i++) seed += input.charCodeAt(i);
+            for(let i=0; i<device.length; i++) seed += device.charCodeAt(i);
             
-            const getVal = (s, min, max) => Math.floor(Math.abs(Math.sin(seed * s) * (max - min) + min));
+            const calc = (mult, min, max) => {
+                const base = Math.abs(Math.sin(seed * mult * style * weapon));
+                return Math.floor(base * (max - min + 1)) + min;
+            }
 
-            // Sensi de 0 a 200 / DPI Android-Friendly
-            document.getElementById('rGeral').innerText = getVal(1.5, 180, 200);
-            document.getElementById('r2x').innerText = getVal(2.5, 175, 200);
-            document.getElementById('r4x').innerText = getVal(3.5, 185, 200);
-            document.getElementById('rDpi').innerText = getVal(4.5, 411, 960);
+            // Resultados com lógica de opções:
+            document.getElementById('vGeral').innerText = calc(1.1, 180, 200);
+            document.getElementById('vRed').innerText = calc(1.2, 170, 195);
+            document.getElementById('v2x').innerText = calc(1.3, 185, 200);
+            document.getElementById('v4x').innerText = calc(1.4, 190, 200);
+            
+            // DPI Ajustada: Mínimo 411, Máximo 960 (Respeitando a sua correção)
+            document.getElementById('vDpi').innerText = calc(1.5, 411, 960);
 
-            loader.style.display = 'none';
+            status.style.display = 'none';
             results.style.display = 'grid';
         }
     </script>
 </body>
-    </html>
-    
+</html>
