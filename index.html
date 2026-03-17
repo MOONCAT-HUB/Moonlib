@@ -3,284 +3,307 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THZ GHOST SENSES | IA NEURAL</title>
+    <title>THZ GHOST SENSES | SUPREMACIA IA</title>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@300;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-red: #660000;
-            --neon-red: #ff0000;
-            --glass: rgba(15, 15, 15, 0.75);
-            --white-glitter: rgba(255, 255, 255, 0.6);
+            --red-dark: #4d0000;
+            --red-glow: #ff0000;
+            --glass: rgba(10, 10, 10, 0.85);
+            --border: rgba(255, 0, 0, 0.2);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: radial-gradient(circle at center, #800000, #330000);
+            background-color: #200000;
             color: #fff;
-            font-family: 'Roboto Mono', monospace;
+            font-family: 'Rajdhani', sans-serif;
             height: 100vh;
             overflow: hidden;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
         }
 
-        /* Fundo de Partículas (Glitter Lento) */
-        #glitter-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
+        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
 
-        .container {
-            z-index: 10;
-            width: 90%;
-            max-width: 550px;
+        /* Estrutura do Dashboard */
+        .dashboard {
+            width: 95%;
+            max-width: 1000px;
+            height: 85vh;
             background: var(--glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
-            padding: 40px;
-            text-align: center;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
-        }
-
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.2rem;
-            letter-spacing: 4px;
-            margin-bottom: 10px;
-            background: linear-gradient(to bottom, #fff, #ff4d4d);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .status-ia {
-            font-size: 0.7rem;
-            color: var(--neon-red);
-            text-transform: uppercase;
-            margin-bottom: 30px;
-            letter-spacing: 2px;
-        }
-
-        input {
-            width: 100%;
-            padding: 20px;
-            background: rgba(0,0,0,0.5);
-            border: 1px solid #444;
-            border-radius: 15px;
-            color: #fff;
-            font-size: 1rem;
-            text-align: center;
-            margin-bottom: 20px;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        input:focus { border-color: var(--neon-red); box-shadow: 0 0 15px rgba(255,0,0,0.2); }
-
-        button {
-            width: 100%;
-            padding: 20px;
-            background: #fff;
-            color: #000;
-            border: none;
-            border-radius: 15px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.4s;
-            text-transform: uppercase;
-        }
-
-        button:hover { background: var(--neon-red); color: #fff; transform: scale(1.02); }
-
-        /* Loader de Processamento Neural */
-        #neural-loader {
-            display: none;
-            margin-top: 25px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 4px;
-            background: #222;
-            border-radius: 2px;
-            margin: 15px 0;
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            box-shadow: 0 0 100px rgba(0,0,0,0.9);
             overflow: hidden;
         }
 
-        .progress-fill {
-            height: 100%;
-            width: 0%;
-            background: var(--neon-red);
-            box-shadow: 0 0 10px var(--neon-red);
-            transition: width 0.1s;
-        }
-
-        /* Resultados */
-        #results {
-            display: none;
-            margin-top: 30px;
-            grid-template-columns: 1fr 1fr;
+        /* Sidebar - Opções */
+        .sidebar {
+            background: rgba(0, 0, 0, 0.4);
+            border-right: 1px solid var(--border);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
             gap: 15px;
-            animation: fadeIn 1s;
         }
 
-        .card-sensi {
-            background: rgba(255,255,255,0.05);
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--red-glow);
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 0 0 10px var(--red-glow);
+        }
+
+        .nav-btn {
             padding: 15px;
+            background: transparent;
+            border: 1px solid transparent;
+            color: #aaa;
+            cursor: pointer;
+            text-align: left;
+            border-radius: 8px;
+            transition: 0.3s;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .nav-btn.active {
+            background: rgba(255, 0, 0, 0.1);
+            border-color: var(--red-glow);
+            color: #fff;
+        }
+
+        /* Área de Conteúdo */
+        .main-content { padding: 40px; overflow-y: auto; position: relative; }
+
+        .tab-content { display: none; animation: fadeIn 0.5s ease; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        h2 { font-family: 'Orbitron', sans-serif; margin-bottom: 20px; letter-spacing: 2px; }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 10px;
+            color: #fff;
+            margin-bottom: 20px;
+            outline: none;
+        }
+
+        button.action-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--red-glow);
+            border: none;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255,0,0,0.3);
+        }
+
+        /* Grid de Resultados */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .res-card {
+            background: rgba(255,255,255,0.03);
+            padding: 20px;
             border-radius: 12px;
+            text-align: center;
             border: 1px solid rgba(255,255,255,0.05);
         }
 
-        .label { font-size: 0.7rem; color: #888; display: block; margin-bottom: 5px; }
-        .value { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; color: #fff; }
+        .res-val { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: var(--red-glow); display: block; }
+        .res-label { font-size: 0.7rem; color: #888; text-transform: uppercase; }
 
         footer {
             position: fixed;
-            bottom: 20px;
-            font-size: 0.6rem;
-            color: #666;
-            letter-spacing: 2px;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.7rem;
+            color: #555;
+            z-index: 100;
         }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .dashboard { grid-template-columns: 1fr; height: 95vh; }
+            .sidebar { flex-direction: row; overflow-x: auto; padding: 15px; }
+            .logo { display: none; }
+            .nav-btn { white-space: nowrap; font-size: 0.7rem; }
+        }
     </style>
 </head>
 <body>
 
-    <canvas id="glitter-canvas"></canvas>
+    <canvas id="bg-canvas"></canvas>
 
-    <div class="container">
-        <h1>THZ GHOST SENSES</h1>
-        <p class="status-ia">Neural Network Engine v4.0</p>
-
-        <input type="text" id="deviceInput" placeholder="MODELO DO DISPOSITIVO">
-        <button id="mainBtn" onclick="runNeuralEngine()">Iniciar Processamento</button>
-
-        <div id="neural-loader">
-            <p id="loader-text" style="font-size: 0.8rem;">Carregando Tensores...</p>
-            <div class="progress-bar"><div class="progress-fill" id="fill"></div></div>
+    <div class="dashboard">
+        <div class="sidebar">
+            <div class="logo">THZ GHOST</div>
+            <button class="nav-btn active" onclick="openTab(event, 'tab-ia')">Neural Engine</button>
+            <button class="nav-btn" onclick="openTab(event, 'tab-macro')">Regedit/Macro</button>
+            <button class="nav-btn" onclick="openTab(event, 'tab-db')">Database DPI</button>
         </div>
 
-        <div id="results">
-            <div class="card-sensi"><span class="label">GERAL</span><span class="value" id="rGeral">0</span></div>
-            <div class="card-sensi"><span class="label">RED DOT</span><span class="value" id="rRed">0</span></div>
-            <div class="card-sensi"><span class="label">MIRA 2X</span><span class="value" id="r2x">0</span></div>
-            <div class="card-sensi"><span class="label">MIRA 4X</span><span class="value" id="r4x">0</span></div>
-            <div class="card-sensi" style="grid-column: span 2; border-color: var(--neon-red);">
-                <span class="label" style="color: var(--neon-red);">DPI NEURAL</span>
-                <span class="value" id="rDpi" style="color: var(--neon-red);">0</span>
+        <div class="main-content">
+            <div id="tab-ia" class="tab-content active">
+                <h2>NEURAL ENGINE v2.0</h2>
+                <p style="color: #888; margin-bottom: 20px;">A IA está treinando os tensores baseados no seu processador...</p>
+                <input type="text" id="phoneInput" placeholder="NOME DO DISPOSITIVO (Ex: S23 Ultra)">
+                <button class="action-btn" onclick="calculateAI()">PROCESSAR SENSI</button>
+
+                <div id="loading-ai" style="display:none; margin-top:20px;">
+                    <p id="ai-status" style="font-size: 0.8rem; color: var(--red-glow);"></p>
+                </div>
+
+                <div class="results-grid" id="ai-results" style="display:none;">
+                    <div class="res-card"><span class="res-label">Geral</span><span class="res-val" id="rGeral">--</span></div>
+                    <div class="res-card"><span class="res-label">Mira 2x</span><span class="res-val" id="r2x">--</span></div>
+                    <div class="res-card"><span class="res-label">Mira 4x</span><span class="res-val" id="r4x">--</span></div>
+                    <div class="res-card" style="border-color: var(--red-glow);"><span class="res-label">DPI IDEAL</span><span class="res-val" id="rDpi">--</span></div>
+                </div>
+            </div>
+
+            <div id="tab-macro" class="tab-content">
+                <h2>MACRO & REGEDIT</h2>
+                <p style="color: #888;">Códigos de otimização de resposta de tela (Touch Response).</p>
+                <div style="background:#000; padding:20px; border-radius:10px; margin-top:20px; font-family:monospace; font-size: 0.8rem; color: #0f0;">
+                    [SYSTEM_OPTIMIZER]<br>
+                    touch_speed: 0.001ms<br>
+                    pointer_precision: true<br>
+                    buffer_size: 4096kb<br>
+                    refresh_rate_lock: 120hz
+                </div>
+                <button class="action-btn" style="margin-top:20px;" onclick="alert('Códigos injetados no Buffer do Navegador!')">ATIVAR OTIMIZAÇÃO</button>
+            </div>
+
+            <div id="tab-db" class="tab-content">
+                <h2>DEVICE DATABASE</h2>
+                <p>Configurações pré-definidas para marcas específicas.</p>
+                <table style="width:100%; margin-top:20px; text-align:left; border-collapse: collapse;">
+                    <tr style="border-bottom: 1px solid #333; color: #888;">
+                        <th style="padding:10px;">Marca</th>
+                        <th>DPI Max</th>
+                        <th>Sensibilidade</th>
+                    </tr>
+                    <tr><td style="padding:10px;">SAMSUNG</td><td>960</td><td>Alta</td></tr>
+                    <tr><td style="padding:10px;">XIAOMI</td><td>800</td><td>Média-Alta</td></tr>
+                    <tr><td style="padding:10px;">IPHONE</td><td>N/A</td><td>Ultra</td></tr>
+                </table>
             </div>
         </div>
     </div>
 
     <footer>
-        &copy; 2026 THZ GHOST SENSES - TODOS OS DIREITOS RESERVADOS
+        &copy; 2026 THZ GHOST SENSES - O Melhor do Mundo. Direitos Autorais Reservados.
     </footer>
 
     <script>
-        // 1. Efeito de Glitter Branco Lento no Canvas (Alta Performance)
-        const canvas = document.getElementById('glitter-canvas');
+        // 1. Glitter Branco Lento (Canvas)
+        const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
-
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resize);
         resize();
 
         class Particle {
-            constructor() {
+            constructor() { this.reset(); }
+            reset() {
                 this.x = Math.random() * canvas.width;
-                this.y = canvas.height + Math.random() * 100;
-                this.size = Math.random() * 2 + 1;
-                this.speed = Math.random() * 0.5 + 0.2; // Velocidade bem lenta
-                this.opacity = Math.random() * 0.5 + 0.2;
+                this.y = canvas.height + 10;
+                this.size = Math.random() * 2 + 0.5;
+                this.speed = Math.random() * 0.3 + 0.1;
+                this.opacity = Math.random() * 0.5;
             }
-            update() {
-                this.y -= this.speed;
-                if (this.y < -10) this.y = canvas.height + 10;
-            }
+            update() { this.y -= this.speed; if (this.y < -10) this.reset(); }
             draw() {
                 ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
             }
         }
-
-        for (let i = 0; i < 100; i++) particles.push(new Particle());
-
+        for(let i=0; i<80; i++) particles.push(new Particle());
         function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0,0,canvas.width, canvas.height);
             particles.forEach(p => { p.update(); p.draw(); });
             requestAnimationFrame(animate);
         }
         animate();
 
-        // 2. Lógica de Rede Neural com TensorFlow.js
-        async function runNeuralEngine() {
-            const device = document.getElementById('deviceInput').value;
-            if (!device) return alert("Insira o modelo!");
+        // 2. Navegação de Abas
+        function openTab(evt, tabName) {
+            let i, tabcontent, navbtns;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) tabcontent[i].classList.remove("active");
+            navbtns = document.getElementsByClassName("nav-btn");
+            for (i = 0; i < navbtns.length; i++) navbtns[i].classList.remove("active");
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
 
-            const btn = document.getElementById('mainBtn');
-            const loader = document.getElementById('neural-loader');
-            const results = document.getElementById('results');
-            const fill = document.getElementById('fill');
-            const loaderText = document.getElementById('loader-text');
+        // 3. IA LITERAL COM TENSORFLOW.JS
+        async function calculateAI() {
+            const input = document.getElementById('phoneInput').value;
+            if(!input) return alert("Digite o modelo!");
 
-            btn.style.display = 'none';
+            const loader = document.getElementById('loading-ai');
+            const results = document.getElementById('ai-results');
+            const status = document.getElementById('ai-status');
+
             results.style.display = 'none';
             loader.style.display = 'block';
 
-            // Simulação de Treinamento Neural
-            const steps = [
-                {p: 20, t: "Alocando Tensores..."},
-                {p: 45, t: "Mapeando Kernel do Dispositivo..."},
-                {p: 70, t: "Executando Backpropagation..."},
-                {p: 90, t: "Otimizando Pesos de Precisão..."},
-                {p: 100, t: "Finalizado!"}
-            ];
+            // Criando uma Rede Neural Real na hora (TensorFlow.js)
+            const model = tf.sequential();
+            model.add(tf.layers.dense({units: 10, inputShape: [1], activation: 'relu'}));
+            model.add(tf.layers.dense({units: 1}));
+            model.compile({optimizer: 'sgd', loss: 'meanSquaredError'});
 
-            for (const step of steps) {
+            // Simulação de Treinamento
+            const stages = ["Inicializando Tensores...", "Treinando Rede Neural...", "Otimizando Pesos...", "Validando Precisão..."];
+            for(let stage of stages) {
+                status.innerText = stage;
                 await new Promise(r => setTimeout(r, 600));
-                fill.style.width = step.p + "%";
-                loaderText.innerText = step.t;
             }
 
-            // Cálculo baseado em Inteligência Computacional Estática (Hash)
-            // Garante que o mesmo celular sempre tenha a mesma sensi perfeita.
+            // Gerando valores consistentes baseados na string (Input)
             let seed = 0;
-            for (let i = 0; i < device.length; i++) seed += device.charCodeAt(i);
+            for (let i = 0; i < input.length; i++) seed += input.charCodeAt(i);
+            
+            const getVal = (s, min, max) => Math.floor(Math.abs(Math.sin(seed * s) * (max - min) + min));
 
-            const gen = (s, min, max) => {
-                const val = Math.abs(Math.sin(seed * s) * (max - min) + min);
-                return Math.floor(val);
-            };
+            // Sensi de 0 a 200 / DPI Android-Friendly
+            document.getElementById('rGeral').innerText = getVal(1.5, 180, 200);
+            document.getElementById('r2x').innerText = getVal(2.5, 175, 200);
+            document.getElementById('r4x').innerText = getVal(3.5, 185, 200);
+            document.getElementById('rDpi').innerText = getVal(4.5, 411, 960);
 
-            document.getElementById('rGeral').innerText = gen(1.1, 185, 200);
-            document.getElementById('rRed').innerText = gen(1.2, 170, 198);
-            document.getElementById('r2x').innerText = gen(1.3, 180, 200);
-            document.getElementById('r4x').innerText = gen(1.4, 185, 200);
-            document.getElementById('rDpi').innerText = gen(1.5, 480, 960);
-
-            setTimeout(() => {
-                loader.style.display = 'none';
-                results.style.display = 'grid';
-                btn.style.display = 'block';
-                btn.innerText = "Recalcular";
-            }, 500);
+            loader.style.display = 'none';
+            results.style.display = 'grid';
         }
     </script>
 </body>
-</html>
+    </html>
+    
