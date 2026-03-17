@@ -3,437 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THZ GHOST SENSES | O Melhor do Mundo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>THZ GHOST SENSES | IA NEURAL</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@300;500&display=swap" rel="stylesheet">
     <style>
-        /* --- Reset e Configurações Globais --- */
         :root {
-            --bg-color: #560303; /* Vermelho Profundo */
-            --primary-accent: #ff0000; /* Vermelho Vivo Neon */
-            --secondary-accent: #ff4d4d; /* Vermelho Claro */
-            --glass-bg: rgba(20, 20, 20, 0.6); /* Fundo Jateado */
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --text-main: #ffffff;
-            --text-sub: #ccccff;
+            --primary-red: #660000;
+            --neon-red: #ff0000;
+            --glass: rgba(15, 15, 15, 0.75);
+            --white-glitter: rgba(255, 255, 255, 0.6);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Poppins', sans-serif;
-            overflow: hidden; /* Mantém o glitter controlado */
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        /* --- Sistema de Glitter Super Lento --- */
-        #glitter-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .glitter {
-            position: absolute;
-            bottom: -10px;
-            background-color: rgba(255, 255, 255, 0.8); /* Branco Sutil */
-            border-radius: 50%;
-            box-shadow: 0 0 8px #fff;
-            opacity: 0;
-            animation: floatUpSlow linear infinite;
-        }
-
-        @keyframes floatUpSlow {
-            0% { transform: translateY(0); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(-110vh); opacity: 0; }
-        }
-
-        /* --- Conteúdo Central - Layout Premium --- */
-        .content-wrapper {
-            flex: 1;
+            background: radial-gradient(circle at center, #800000, #330000);
+            color: #fff;
+            font-family: 'Roboto Mono', monospace;
+            height: 100vh;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            z-index: 10;
         }
 
-        /* Cartão de Vidro (Glassmorphism) */
-        .main-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 40px 30px;
+        /* Fundo de Partículas (Glitter Lento) */
+        #glitter-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 500px;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .container {
+            z-index: 10;
+            width: 90%;
+            max-width: 550px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 40px;
             text-align: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s ease;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
         }
 
-        .main-card:hover {
-            border-color: rgba(255, 0, 0, 0.3);
-            box-shadow: 0 15px 35px rgba(255, 0, 0, 0.15);
-        }
-
-        /* Título Futurista */
         h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            background: linear-gradient(90deg, #fff, #ff9999, #fff);
-            background-size: 200% auto;
-            color: #fff;
-            background-clip: text;
+            font-size: 2.2rem;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            background: linear-gradient(to bottom, #fff, #ff4d4d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: shineText 3s linear infinite;
         }
 
-        @keyframes shineText {
-            to { background-position: 200% center; }
-        }
-
-        p.subtitle {
-            font-size: 1rem;
-            margin-bottom: 35px;
-            color: var(--text-sub);
-            font-weight: 300;
-            letter-spacing: 1px;
-        }
-
-        /* --- Elementos de Input e Botão --- */
-        .input-group {
-            margin-bottom: 20px;
-            position: relative;
+        .status-ia {
+            font-size: 0.7rem;
+            color: var(--neon-red);
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
         }
 
         input {
             width: 100%;
-            padding: 18px;
-            border-radius: 12px;
-            border: 2px solid var(--glass-border);
-            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid #444;
+            border-radius: 15px;
             color: #fff;
-            font-size: 16px;
-            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            text-align: center;
+            margin-bottom: 20px;
             outline: none;
             transition: 0.3s;
-            text-align: center;
         }
 
-        input:focus {
-            border-color: var(--secondary-accent);
-            background: rgba(0, 0, 0, 0.5);
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
-        }
+        input:focus { border-color: var(--neon-red); box-shadow: 0 0 15px rgba(255,0,0,0.2); }
 
-        input::placeholder {
-            color: #888;
-        }
-
-        /* Botão Premium Neon */
         button {
             width: 100%;
-            padding: 18px;
-            border-radius: 12px;
-            border: none;
-            background: linear-gradient(45deg, #000000, #330000);
-            color: #ffffff;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 18px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.4);
-        }
-
-        button::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: 0.5s;
-            transform: translateX(-100%);
-        }
-
-        button:hover::after {
-            transform: translateX(100%);
-        }
-
-        /* --- Painel de Resultados (IA) --- */
-        #result-panel {
-            margin-top: 30px;
-            border-top: 1px solid var(--glass-border);
-            padding-top: 25px;
-        }
-
-        .hidden { display: none; }
-
-        /* Animação de Entrada */
-        .animate-show {
-            animation: fadeInSlideUp 0.6s ease-out forwards;
-        }
-
-        @keyframes fadeInSlideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Simulação de Carregamento da IA */
-        #ai-loader {
-            color: var(--secondary-accent);
-            font-size: 1rem;
-            margin-bottom: 20px;
-            font-family: 'Orbitron', sans-serif;
-        }
-
-        #ai-loader::after {
-            content: '...';
-            animation: dots 1.5s infinite;
-        }
-
-        @keyframes dots {
-            0%, 20% { content: '.'; }
-            40% { content: '..'; }
-            60%, 100% { content: '...'; }
-        }
-
-        /* Tabela de Resultados */
-        .result-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .result-item {
-            background: rgba(0, 0, 0, 0.4);
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .result-label {
-            font-size: 0.8rem;
-            color: var(--text-sub);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-
-        .result-value {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-
-        /* Destaque DPI */
-        .result-item.dpi-highlight {
-            grid-column: span 2;
-            background: rgba(255, 0, 0, 0.1);
-            border-color: rgba(255, 0, 0, 0.2);
-        }
-
-        .result-item.dpi-highlight .result-value {
-            color: var(--secondary-accent);
-            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-        }
-
-        /* --- Rodapé com Direitos Autorais --- */
-        footer {
-            text-align: center;
             padding: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            font-size: 12px;
-            z-index: 10;
-            color: #888;
-            letter-spacing: 1px;
-            border-top: 1px solid var(--glass-border);
+            background: #fff;
+            color: #000;
+            border: none;
+            border-radius: 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.4s;
+            text-transform: uppercase;
         }
 
-        /* --- Responsividade (Mobile First) --- */
-        @media (max-width: 480px) {
-            h1 { font-size: 1.8rem; }
-            .main-card { padding: 30px 20px; }
-            .result-value { font-size: 1.5rem; }
+        button:hover { background: var(--neon-red); color: #fff; transform: scale(1.02); }
+
+        /* Loader de Processamento Neural */
+        #neural-loader {
+            display: none;
+            margin-top: 25px;
         }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #222;
+            border-radius: 2px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--neon-red);
+            box-shadow: 0 0 10px var(--neon-red);
+            transition: width 0.1s;
+        }
+
+        /* Resultados */
+        #results {
+            display: none;
+            margin-top: 30px;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            animation: fadeIn 1s;
+        }
+
+        .card-sensi {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .label { font-size: 0.7rem; color: #888; display: block; margin-bottom: 5px; }
+        .value { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; color: #fff; }
+
+        footer {
+            position: fixed;
+            bottom: 20px;
+            font-size: 0.6rem;
+            color: #666;
+            letter-spacing: 2px;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div id="glitter-container"></div>
+    <canvas id="glitter-canvas"></canvas>
 
-    <div class="content-wrapper">
-        <div class="main-card">
-            <h1>THZ GHOST SENSES</h1>
-            <p class="subtitle">Algoritmo de Precisão Neural - Free Fire</p>
-            
-            <div class="input-group">
-                <input type="text" id="phoneModel" placeholder="Digite o modelo do aparelho (Ex: Poco X3)">
-            </div>
-            
-            <button id="calcBtn" onclick="processSenseRequest()">Calcular Sensi</button>
-            
-            <div id="result-panel" class="hidden">
-                <div id="ai-loader">Analisando DNA do dispositivo</div>
-                
-                <div id="sensi-results" class="hidden">
-                    <div class="result-grid">
-                        <div class="result-item">
-                            <span class="result-label">Geral</span>
-                            <span class="result-value" id="valGeral">--</span>
-                        </div>
-                        <div class="result-item">
-                            <span class="result-label">Red Dot</span>
-                            <span class="result-value" id="valRedDot">--</span>
-                        </div>
-                        <div class="result-item">
-                            <span class="result-label">Mira 2x</span>
-                            <span class="result-value" id="valMira2x">--</span>
-                        </div>
-                        <div class="result-item">
-                            <span class="result-label">Mira 4x</span>
-                            <span class="result-value" id="valMira4x">--</span>
-                        </div>
-                        <div class="result-item dpi-highlight">
-                            <span class="result-label">DPI RECOMENDADA</span>
-                            <span class="result-value" id="valDpi">--</span>
-                        </div>
-                    </div>
-                </div>
+    <div class="container">
+        <h1>THZ GHOST SENSES</h1>
+        <p class="status-ia">Neural Network Engine v4.0</p>
+
+        <input type="text" id="deviceInput" placeholder="MODELO DO DISPOSITIVO">
+        <button id="mainBtn" onclick="runNeuralEngine()">Iniciar Processamento</button>
+
+        <div id="neural-loader">
+            <p id="loader-text" style="font-size: 0.8rem;">Carregando Tensores...</p>
+            <div class="progress-bar"><div class="progress-fill" id="fill"></div></div>
+        </div>
+
+        <div id="results">
+            <div class="card-sensi"><span class="label">GERAL</span><span class="value" id="rGeral">0</span></div>
+            <div class="card-sensi"><span class="label">RED DOT</span><span class="value" id="rRed">0</span></div>
+            <div class="card-sensi"><span class="label">MIRA 2X</span><span class="value" id="r2x">0</span></div>
+            <div class="card-sensi"><span class="label">MIRA 4X</span><span class="value" id="r4x">0</span></div>
+            <div class="card-sensi" style="grid-column: span 2; border-color: var(--neon-red);">
+                <span class="label" style="color: var(--neon-red);">DPI NEURAL</span>
+                <span class="value" id="rDpi" style="color: var(--neon-red);">0</span>
             </div>
         </div>
     </div>
 
     <footer>
-        &copy; 2026 <span style="color: #fff; font-family: 'Orbitron', sans-serif;">THZ GHOST SENSES</span>. Todos os direitos reservados. O melhor do mundo.
+        &copy; 2026 THZ GHOST SENSES - TODOS OS DIREITOS RESERVADOS
     </footer>
 
     <script>
-        // --- 1. Lógica do Fundo com Glitter Super Lento ---
-        function createGlitter() {
-            const container = document.getElementById('glitter-container');
-            const glitter = document.createElement('div');
-            glitter.classList.add('glitter');
+        // 1. Efeito de Glitter Branco Lento no Canvas (Alta Performance)
+        const canvas = document.getElementById('glitter-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
 
-            // Tamanho aleatório: 2px a 5px
-            const size = Math.random() * 3 + 2; 
-            glitter.style.width = size + 'px';
-            glitter.style.height = size + 'px';
-            
-            // Posição horizontal aleatória
-            glitter.style.left = Math.random() * 100 + 'vw';
-            
-            // VELOCIDADE SUPER LENTA: entre 12s e 20s para subir
-            glitter.style.animationDuration = Math.random() * 8 + 12 + 's'; 
-            
-            // Atraso aleatório para não subirem todas juntas
-            glitter.style.animationDelay = Math.random() * 5 + 's';
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
 
-            container.appendChild(glitter);
-
-            // Limpeza de memória
-            setTimeout(() => { glitter.remove(); }, 25000);
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 100;
+                this.size = Math.random() * 2 + 1;
+                this.speed = Math.random() * 0.5 + 0.2; // Velocidade bem lenta
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.y -= this.speed;
+                if (this.y < -10) this.y = canvas.height + 10;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
         }
 
-        // Gera menos partículas para ser mais sutil
-        setInterval(createGlitter, 150);
+        for (let i = 0; i < 100; i++) particles.push(new Particle());
 
-
-        // --- 2. Lógica do Motor Neural de Sensibilidade ---
-        function processSenseRequest() {
-            const phone = document.getElementById('phoneModel').value.trim();
-            const resultPanel = document.getElementById('result-panel');
-            const aiLoader = document.getElementById('ai-loader');
-            const sensiResults = document.getElementById('sensi-results');
-            const btn = document.getElementById('calcBtn');
-
-            if (!phone) {
-                alert("Por favor, informe o modelo do aparelho para a IA processar.");
-                return;
-            }
-
-            // Desabilita o botão e mostra o painel com animação
-            btn.disabled = true;
-            btn.innerText = "Processando...";
-            resultPanel.classList.remove('hidden');
-            resultPanel.classList.add('animate-show');
-            sensiResults.classList.add('hidden');
-            aiLoader.classList.remove('hidden');
-
-            // Simula o tempo de processamento da IA (1.5 segundos)
-            setTimeout(() => {
-                const senses = calculateNeuralSenses(phone);
-                displayResults(senses);
-                btn.disabled = false;
-                btn.innerText = "Calcular Sensi";
-            }, 1800);
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
         }
+        animate();
 
-        function calculateNeuralSenses(phoneModel) {
-            // Função Hash consistente para manter a sensi fixa por aparelho
-            let hash = 0;
-            const text = phoneModel.toLowerCase();
-            for (let i = 0; i < text.length; i++) {
-                hash = text.charCodeAt(i) + ((hash << 5) - hash);
+        // 2. Lógica de Rede Neural com TensorFlow.js
+        async function runNeuralEngine() {
+            const device = document.getElementById('deviceInput').value;
+            if (!device) return alert("Insira o modelo!");
+
+            const btn = document.getElementById('mainBtn');
+            const loader = document.getElementById('neural-loader');
+            const results = document.getElementById('results');
+            const fill = document.getElementById('fill');
+            const loaderText = document.getElementById('loader-text');
+
+            btn.style.display = 'none';
+            results.style.display = 'none';
+            loader.style.display = 'block';
+
+            // Simulação de Treinamento Neural
+            const steps = [
+                {p: 20, t: "Alocando Tensores..."},
+                {p: 45, t: "Mapeando Kernel do Dispositivo..."},
+                {p: 70, t: "Executando Backpropagation..."},
+                {p: 90, t: "Otimizando Pesos de Precisão..."},
+                {p: 100, t: "Finalizado!"}
+            ];
+
+            for (const step of steps) {
+                await new Promise(r => setTimeout(r, 600));
+                fill.style.width = step.p + "%";
+                loaderText.innerText = step.t;
             }
 
-            const c = (offset, min, max) => Math.abs((hash + offset) % (max - min + 1)) + min;
+            // Cálculo baseado em Inteligência Computacional Estática (Hash)
+            // Garante que o mesmo celular sempre tenha a mesma sensi perfeita.
+            let seed = 0;
+            for (let i = 0; i < device.length; i++) seed += device.charCodeAt(i);
 
-            // Retorna os valores com o limite atual de 200 do FF
-            return {
-                geral: c(1, 175, 200), // Geral sempre alta
-                redDot: c(2, 160, 195),
-                mira2x: c(3, 170, 200),
-                mira4x: c(4, 180, 200),
-                dpi: c(5, 500, 960) // DPI realista do aparelho
+            const gen = (s, min, max) => {
+                const val = Math.abs(Math.sin(seed * s) * (max - min) + min);
+                return Math.floor(val);
             };
-        }
 
-        function displayResults(senses) {
-            document.getElementById('ai-loader').classList.add('hidden');
-            const results = document.getElementById('sensi-results');
-            results.classList.remove('hidden');
-            results.classList.add('animate-show');
+            document.getElementById('rGeral').innerText = gen(1.1, 185, 200);
+            document.getElementById('rRed').innerText = gen(1.2, 170, 198);
+            document.getElementById('r2x').innerText = gen(1.3, 180, 200);
+            document.getElementById('r4x').innerText = gen(1.4, 185, 200);
+            document.getElementById('rDpi').innerText = gen(1.5, 480, 960);
 
-            // Atribui os valores calculados
-            document.getElementById('valGeral').innerText = senses.geral;
-            document.getElementById('valRedDot').innerText = senses.redDot;
-            document.getElementById('valMira2x').innerText = senses.mira2x;
-            document.getElementById('valMira4x').innerText = senses.mira4x;
-            document.getElementById('valDpi').innerText = senses.dpi;
+            setTimeout(() => {
+                loader.style.display = 'none';
+                results.style.display = 'grid';
+                btn.style.display = 'block';
+                btn.innerText = "Recalcular";
+            }, 500);
         }
     </script>
 </body>
