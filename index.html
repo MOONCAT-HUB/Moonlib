@@ -57,10 +57,10 @@
             letter-spacing: 1px;
             cursor: pointer;
             position: relative;
-            overflow: hidden; /* Necessário para o efeito de brilho */
+            overflow: hidden;
         }
 
-        /* EFEITO DE BRILHO PASSANDO NO BOTÃO */
+        /* Efeito de Brilho */
         .link-item::after {
             content: '';
             position: absolute;
@@ -70,29 +70,28 @@
             height: 200%;
             background: rgba(255, 255, 255, 0.2);
             transform: rotate(30deg);
-            transition: none;
-            animation: shine 3s infinite;
+            animation: shine 4s infinite;
         }
 
         @keyframes shine {
             0% { left: -60%; }
-            20% { left: 120%; }
+            15% { left: 120%; }
             100% { left: 120%; }
         }
 
         .link-item:hover {
             background-color: #222;
-            transform: scale(1.05);
+            transform: scale(1.03);
             color: #00e5ff;
         }
 
-        /* --- MODAL AJUSTADO (TEXTO CLARO) --- */
+        /* Modal Ajustado */
         .modal {
             display: none;
             position: fixed;
             z-index: 100;
             left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.85);
+            background-color: rgba(0,0,0,0.9);
             align-items: center;
             justify-content: center;
         }
@@ -104,11 +103,9 @@
             border: 2px solid #bf953f;
             text-align: center;
             max-width: 280px;
-            color: #fff; /* Texto agora fica branco puro para ler bem */
+            color: #fff;
             box-shadow: 0 0 25px rgba(191, 149, 63, 0.6);
         }
-
-        .modal-content p { color: #fcf6ba; margin-top: 15px; } /* Texto interno dourado claro */
 
         .close-btn {
             margin-top: 20px;
@@ -119,16 +116,14 @@
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
-            text-transform: uppercase;
         }
 
-        /* --- GLITTER --- */
+        /* Glitter Azul */
         .glitter-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
-        .dot { position: absolute; width: 6px; height: 6px; background-color: #00e5ff; border-radius: 50%; box-shadow: 0 0 10px #00e5ff; bottom: -10px; animation: moveUp 4s linear infinite; }
+        .dot { position: absolute; width: 6px; height: 6px; background-color: #00e5ff; border-radius: 50%; box-shadow: 0 0 10px #00e5ff; bottom: -10px; animation: moveUp 5s linear infinite; }
         .dot:nth-child(1) { left: 10%; animation-delay: 0s; }
-        .dot:nth-child(2) { left: 40%; animation-delay: 1.5s; width: 4px; }
-        .dot:nth-child(3) { left: 70%; animation-delay: 0.5s; }
-        .dot:nth-child(4) { left: 90%; animation-delay: 2.5s; width: 5px; }
+        .dot:nth-child(2) { left: 45%; animation-delay: 2s; }
+        .dot:nth-child(3) { left: 80%; animation-delay: 1s; }
 
         @keyframes moveUp { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-110vh); opacity: 0; } }
     </style>
@@ -136,13 +131,13 @@
 <body>
 
     <div class="glitter-container">
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
     </div>
 
     <div id="avisoModal" class="modal">
         <div class="modal-content">
             <h2 style="color:#bf953f; margin:0;">⚠️ AVISO</h2>
-            <p>O conteúdo <strong>FF SENSE</strong> está sendo preparado e estará disponível em breve!</p>
+            <p style="color:#fcf6ba;">O conteúdo <strong>FF SENSE</strong> está em andamento e será liberado em breve!</p>
             <button class="close-btn" onclick="fecharModal()">ENTENDIDO</button>
         </div>
     </div>
@@ -153,10 +148,13 @@
     <p>Acesse nossos canais oficiais 👇</p>
 
     <div class="links-container">
-        <a href="https://seu-link-aqui.com" class="link-item">NOSSOS SITES</a>
-        <a href="https://instagram.com/seu_perfil" class="link-item">INSTAGRAM OFICIAL</a>
+        <a href="COLOQUE_SEU_LINK_AQUI" class="link-item">NOSSOS SITES</a>
+        
+        <a href="https://instagram.com/COLOQUE_SEU_USER_AQUI" class="link-item">INSTAGRAM OFICIAL</a>
+        
         <div class="link-item" onclick="abrirModal()">FF SENSE (Em andamento)</div>
-        <a href="https://wa.me/seu_numero" class="link-item">SUPORTE WHATSAPP</a>
+        
+        <a href="https://wa.me/5582999999999" class="link-item">SUPORTE WHATSAPP</a>
     </div>
 
     <script>
