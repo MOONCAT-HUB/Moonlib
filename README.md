@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/THZNETWORK/Moonlib/main/1000027501.png" width="250" alt="ONYX Diamond">
-</p>
+
 
 <h1 align="center">𝕺𝕹𝖄𝖃 𝕮𝖍𝖆𝖙 𝕬𝕴 - 𝕺𝖋𝖋𝖎𝖈𝖎𝖆𝖑</h1>
 
