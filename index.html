@@ -3,104 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ONYX Chat AI | THZ NETWORK Official</title>
+    <title>ONYX Chat AI | THZ NETWORK</title>
     <style>
+        /* Reset para evitar tela preta por erro de margem */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            background-color: #050505;
-            color: #d1d1d1;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #080808;
+            color: #eeeeee;
+            font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
-            text-align: left;
+            padding: 20px;
         }
 
-        .container {
-            width: 90%;
-            max-width: 600px;
-            padding: 40px;
-            border: 1px solid #1a1a1a;
-            border-radius: 10px;
-            background: rgba(10, 10, 10, 0.9);
-            box-shadow: 0 0 30px rgba(138, 43, 226, 0.3);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+        .card {
+            background: #111111;
+            border: 1px solid #222;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.2);
         }
 
         h1 {
             color: #8a2be2;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin: 0;
-            font-size: 2em;
-            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
         }
 
-        h2 {
-            color: #c0c0c0;
-            font-size: 1.1em;
-            margin: 0;
-            font-weight: normal;
-            line-height: 1.5;
-            text-align: center;
-            border-bottom: 1px solid #1a1a1a;
-            padding-bottom: 20px;
-        }
-
-        .description-box {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            padding: 10px 0;
-        }
-
-        .description-box strong {
-            color: white;
-            font-weight: bold;
-        }
-
-        .description-box span {
-            color: #8a2be2;
-            font-weight: bold;
-        }
-
-        .list-item {
-            display: flex;
-            gap: 10px;
-            align-items: start;
+        .desc {
+            font-size: 1rem;
+            color: #aaa;
             line-height: 1.6;
+            margin-bottom: 25px;
+            text-align: left;
         }
 
-        .list-icon {
+        .feature {
+            margin-bottom: 10px;
+            display: block;
             color: #8a2be2;
             font-weight: bold;
         }
 
-        .btn-download-wrapper {
-            display: flex;
-            justify-content: center;
-            padding-top: 20px;
-        }
-
-        .btn-download {
-            background-color: #8a2be2;
-            color: white;
-            padding: 18px 50px;
+        .btn {
+            display: inline-block;
+            background: #8a2be2;
+            color: #fff;
+            padding: 15px 35px;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: bold;
-            border-radius: 50px;
+            font-size: 1.1rem;
             transition: 0.3s;
-            box-shadow: 0 5px 20px rgba(138, 43, 226, 0.4);
-            font-size: 1.1em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
         }
 
-        .btn-download:hover {
-            background-color: #a020f0;
+        .btn:hover {
             transform: scale(1.05);
-            box-shadow: 0
-            
+            background: #9d3df5;
+        }
+
+        .footer {
+            margin-top: 25px;
+            font-size: 0.7rem;
+            color: #444;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>ONYX CHAT AI</h1>
+        
+        <div class="desc">
+            <span class="feature">⚡ PERFORMANCE MESTRE</span>
+            Otimização real para sensibilidade e DPI em dispositivos Motorola e Android.
+            <br><br>
+            <span class="feature">☁️ CLOUD PERSISTENCE</span>
+            Seus chats e configurações salvos na nuvem da THZ NETWORK.
+        </div>
+
+        <a href="https://github.com/THZNETWORK/Moonlib/releases/download/v2.0/app-release.apk" class="btn">
+            BAIXAR APK (7.53 MB)
+        </a>
+
+        <div class="footer">
+            THZ NETWORK © 2026 | I ALWAYS COME BACK.
+        </div>
+    </div>
+
+</body>
+</html>
