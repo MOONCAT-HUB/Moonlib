@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/THZNETWORK/Moonlib/main/assets/image_9.png" width="250" alt="ONYX Diamond">
+  <img src="https://raw.githubusercontent.com/THZNETWORK/Moonlib/main/1000027501.png" width="250" alt="ONYX Diamond">
 </p>
 
 <h1 align="center">𝕺𝕹𝖄𝖃 𝕮𝖍𝖆𝖙 𝕬𝕴 - 𝕺𝖋𝖋𝖎𝖈𝖎𝖆𝖑</h1>
@@ -13,21 +13,19 @@
 ---
 
 ## 🛰️ Sobre o Projeto
+A **ONYX v2.0** é a central definitiva da **THZ NETWORK**. Este repositório mantém o sistema principal focado em performance, exclusividade e otimização.
 
-A **ONYX v2.0** é a central definitiva da **THZ NETWORK**. Este repositório mantém o sistema principal focado em performance, exclusividade e otimização para usuários exigentes.
-
-* **ONYX AI:** Assistente inteligente para análise de sensibilidade e DPI.
-* **Performance Mobile:** APK otimizado com apenas **7.53 MB**.
-* **Cloud Hub:** Sistema de nuvem persistente para seus chats e configurações.
+* **ONYX AI**: Assistente inteligente para análise de sensibilidade e DPI.
+* **Performance Mobile**: APK otimizado com apenas **7.53 MB**.
+* **Cloud Hub**: Sistema de nuvem persistente para seus chats e configurações.
 
 ---
 
 ## 📦 Download Oficial (Abaixável)
-
-Utilize o link abaixo para baixar a versão mais recente do APK diretamente dos nossos servidores seguros no GitHub Releases.
+Utilize o link abaixo para baixar a versão mais recente do APK diretamente do GitHub Releases.
 
 <p align="center">
-  <a href="[LINK-DO-SEU-RELEASE-AQUI]">
+  <a href="https://github.com/THZNETWORK/Moonlib/releases">
     <img src="https://img.shields.io/badge/BAIXAR-ONYX%20v2.0%20APK-green?style=for-the-badge&logo=android&logoColor=white" alt="Baixar APK">
   </a>
 </p>
